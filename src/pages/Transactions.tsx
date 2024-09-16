@@ -1,8 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-import useAxiosProtected from '../hooks/useAxiosProtected';
+import useAxiosProtected from '@/hooks/useAxiosProtected';
 
-const Transactions: React.FC = () => {
+const Transactions = () => {
   const axiosProtected = useAxiosProtected();
 
   const { data } = useQuery({

@@ -1,5 +1,5 @@
 import useAuth from './useAuth';
-import axios from '../api/axios';
+import axios from '@/api/axios';
 
 interface IRefreshTokenResponse {
   accessToken: string;

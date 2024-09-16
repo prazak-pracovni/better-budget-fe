@@ -1,4 +1,4 @@
-import { axiosProtected } from '../api/axios';
+import { axiosProtected } from '@/api/axios';
 import { useEffect } from 'react';
 import useAuth from './useAuth';
 import useRefreshToken from './useRefreshToken';

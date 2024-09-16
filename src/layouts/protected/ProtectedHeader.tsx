@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import useLogout from '../../../hooks/useLogout';
+import useLogout from '@/hooks/useLogout';
 
 const ProtectedHeader = () => {
   const logout = useLogout();

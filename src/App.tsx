@@ -1,15 +1,15 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Homepage from './pages/Homepage';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import ProtectedRoute from './components/ProtectedRoute';
-import Dashboard from './pages/Dashboard';
-import Layout from './components/Layout/Layout';
-import Transactions from './pages/Transactions';
-import PersistLogin from './components/PersistLogin';
-import ProtectedHeader from './components/Layout/Protected/ProtectedHeader';
-import ProtectedLayout from './components/Layout/Protected/ProtectedLayout';
-import AnonymousLayout from './components/Layout/Anonymous/AnonymousLayout';
+import Homepage from '@/pages/Homepage';
+import Login from '@/pages/Login';
+import Register from '@/pages/Register';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import Dashboard from '@/pages/Dashboard';
+import Layout from '@/layouts/Layout';
+import Transactions from '@/pages/Transactions';
+import PersistLogin from '@/components/PersistLogin';
+import ProtectedHeader from '@/layouts/protected/ProtectedHeader';
+import ProtectedLayout from '@/layouts/protected/ProtectedLayout';
+import AnonymousLayout from '@/layouts/anonymous/AnonymousLayout';
 
 const router = createBrowserRouter([
   {
