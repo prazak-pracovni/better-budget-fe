@@ -4,7 +4,7 @@ import useLogout from '@authentication/api/useLogout';
 const ProtectedHeader = () => {
   const { mutate } = useLogout();
 
-  const signOut = async () => {
+  const signOut = () => {
     mutate();
   };
 
