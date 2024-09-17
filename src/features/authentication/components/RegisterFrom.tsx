@@ -1,14 +1,9 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { useRegisterUser } from '../api/useRegisterUser';
+import { useRegisterUser } from '@authentication/api/useRegisterUser';
 import { EMAIL_REGEX, PASSWORD_REGEX, USERNAME_REGEX } from '@/constants/register-regex';
 import Input from '@/components/Form/Input';
-
-interface IUserRegister {
-  username: string;
-  email: string;
-  password: string;
-}
+import { IUserRegister } from '@authentication/interfaces/user-auth.interface';
 
 const RegisterForm = () => {
   const methods = useForm<IUserRegister>({ mode: 'onTouched' });

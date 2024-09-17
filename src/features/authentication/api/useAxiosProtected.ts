@@ -1,7 +1,7 @@
 import { axiosProtected } from '@/api/axios';
 import { useEffect } from 'react';
-import useAuth from './useAuth';
-import useRefreshToken from './useRefreshToken';
+import useRefreshToken from '@authentication/api/useRefreshToken';
+import useAuth from '@authentication/hooks/useAuth';
 
 const useAxiosProtected = () => {
   const refresh = useRefreshToken();

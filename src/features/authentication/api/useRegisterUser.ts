@@ -2,12 +2,7 @@ import { AxiosError } from 'axios';
 import axios from '@/api/axios';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
-
-interface IUserRegister {
-  username: string;
-  email: string;
-  password: string;
-}
+import { IUserRegister } from '@authentication/interfaces/user-auth.interface';
 
 interface IRegisterError {
   message: string;

@@ -1,12 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import axios from '@/api/axios';
 import { useNavigate } from 'react-router-dom';
-import useAuth from '@/hooks/useAuth';
-
-interface IUserLogin {
-  email: string;
-  password: string;
-}
+import useAuth from '@authentication/hooks/useAuth';
+import { IUserLogin } from '@authentication/interfaces/user-auth.interface';
 
 interface ILoginResponse {
   accessToken: string;
@@ -21,11 +17,13 @@ export const useLoginUser = () => {
   const navigate = useNavigate();
   const { setAccessToken } = useAuth();
 
-  return useMutation({
+  const mutation = useMutation({
     mutationFn: (userLogin: IUserLogin) => loginUser(userLogin),
     onSuccess: ({ accessToken }: ILoginResponse) => {
       setAccessToken(accessToken);
       navigate('/dashboard', { replace: true });
     },
   });
+
+  return mutation;
 };

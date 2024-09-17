@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import useAxiosProtected from '@/hooks/useAxiosProtected';
+import useAxiosProtected from '@authentication/api/useAxiosProtected';
 
 const Dashboard = () => {
   const axiosProtected = useAxiosProtected();
@@ -8,7 +8,6 @@ const Dashboard = () => {
     queryKey: ['dahsboard'],
     queryFn: () => axiosProtected.get('/api/transaction-records'),
   });
-
 
   return (
     <>

@@ -1,15 +1,11 @@
 import { Link } from 'react-router-dom';
-import useLogout from '@/hooks/useLogout';
+import useLogout from '@authentication/api/useLogout';
 
 const ProtectedHeader = () => {
-  const logout = useLogout();
+  const { mutate } = useLogout();
 
   const signOut = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error(error);
-    }
+    mutate();
   };
 
   return (

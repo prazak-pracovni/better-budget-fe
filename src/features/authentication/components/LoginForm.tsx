@@ -1,12 +1,9 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { useLoginUser } from '../api/useLoginUser';
+import { useLoginUser } from '@authentication/api/useLoginUser';
 import Input from '@/components/Form/Input';
+import { IUserLogin } from '@authentication/interfaces/user-auth.interface';
 
-interface IUserLogin {
-  email: string;
-  password: string;
-}
 
 const LoginForm = () => {
   const methods = useForm<IUserLogin>({ mode: 'onTouched' });

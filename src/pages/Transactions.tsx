@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import useAxiosProtected from '@/hooks/useAxiosProtected';
+import useAxiosProtected from '@authentication/api/useAxiosProtected';
 
 const Transactions = () => {
   const axiosProtected = useAxiosProtected();
