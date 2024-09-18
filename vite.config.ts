@@ -10,14 +10,5 @@ export default defineConfig({
       '@authentication': path.resolve(__dirname, './src/features/authentication'),
       '@transactions': path.resolve(__dirname, './src/features/transactions'),
     },
-  },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:4000',
-        changeOrigin: true,
-        rewrite: (path) => path,
-      },
-    },
-  },
+  }
 });

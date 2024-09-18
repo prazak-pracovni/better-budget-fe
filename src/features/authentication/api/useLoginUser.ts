@@ -9,7 +9,7 @@ interface ILoginResponse {
 }
 
 const loginUser = async (userLogin: IUserLogin) => {
-  const { data } = await axios.post(`/api/auth/login`, userLogin);
+  const { data } = await axios.post(`/api/auth/login`, userLogin, { withCredentials: true });
   return data;
 };
 
