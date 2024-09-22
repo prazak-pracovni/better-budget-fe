@@ -6,19 +6,30 @@ interface IInputProps {
   type: HTMLInputTypeAttribute;
   name: string;
   label: string;
+  fullWidth?: boolean;
+  showLabel?: boolean;
   placeholder?: string;
   validation: RegisterOptions<FieldValues, string>;
 }
 
-const Input: React.FC<IInputProps> = ({ id, type, name, label, placeholder, validation }) => {
+const Input: React.FC<IInputProps> = ({
+  id,
+  type,
+  name,
+  label,
+  placeholder,
+  validation,
+  fullWidth,
+  showLabel = true,
+}) => {
   const {
     register,
     formState: { errors },
   } = useFormContext<{ [x: string]: string }>();
 
   return (
-    <div className='flex flex-col items-left'>
-      <label htmlFor={id} className="block text-sm font-medium text-gray-700">
+    <div className={`flex flex-col items-left ${fullWidth && 'w-full'}`}>
+      <label htmlFor={id} className={`block text-sm font-medium text-gray-700 ${!showLabel && 'sr-only'}`}>
         {label}
       </label>
       <input
