@@ -1,4 +1,4 @@
-import { useGetCategories } from '@/features/transactions/api/useGetCategories';
+import { useGetCategories } from '@categories/api/useGetCategories';
 import CategoryItem from './CategoryItem';
 
 const CategoryList = () => {

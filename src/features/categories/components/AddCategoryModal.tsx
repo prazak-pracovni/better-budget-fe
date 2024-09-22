@@ -9,14 +9,15 @@ const AddCategoryModal = () => {
 
   const openModal = () => {
     setIsModalOpened(true);
-  };;
-
+  };
 
   return (
     <>
-      <div>AddCategoryModal</div>
-      <button className="rounded-md bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow" onClick={openModal}>
-        Open modal
+      <button
+        className="rounded-md bg-blue-600 px-5 mb-4 py-2.5 text-sm font-medium text-white shadow"
+        onClick={openModal}
+      >
+        View categories
       </button>
       <Modal
         isOpen={isModalOpened}
@@ -35,16 +36,16 @@ const AddCategoryModal = () => {
           },
         }}
       >
-          <div className="w-full flex items-center justify-between p-6 border-b border-gray-200">
-            <h2 className="font-medium">Categories</h2>
-            <button onClick={() => setIsModalOpened(false)}>
-              <XMarkIcon className="size-6 text-gray-950" />
-            </button>
-          </div>
-          <div className="w-full flex flex-col p-6">
-            <AddCategoryForm></AddCategoryForm>
-            <CategoryList></CategoryList>
-          </div>
+        <div className="w-full flex items-center justify-between p-6 border-b border-gray-200">
+          <h2 className="font-medium">Categories</h2>
+          <button onClick={() => setIsModalOpened(false)}>
+            <XMarkIcon className="size-6 text-gray-950" />
+          </button>
+        </div>
+        <div className="w-full flex flex-col p-6">
+          <AddCategoryForm></AddCategoryForm>
+          <CategoryList></CategoryList>
+        </div>
       </Modal>
     </>
   );

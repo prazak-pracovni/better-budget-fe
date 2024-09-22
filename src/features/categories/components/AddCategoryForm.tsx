@@ -1,6 +1,6 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { ICategory } from '@transactions/interfaces/category.interface';
-import { useAddCategory } from '@transactions/api/useAddCategory';
+import { ICategory } from '@categories/interfaces/category.interface';
+import { useAddCategory } from '@categories/api/useAddCategory';
 import Input from '@/components/Form/Input';
 
 const AddCategoryForm = () => {
@@ -20,7 +20,6 @@ const AddCategoryForm = () => {
           id="title"
           name="title"
           type="text"
-          placeholder="Category title"
           validation={{
             required: { value: true, message: 'Category title is required' },
           }}

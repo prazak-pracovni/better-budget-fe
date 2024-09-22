@@ -9,6 +9,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
       '@authentication': path.resolve(__dirname, './src/features/authentication'),
       '@transactions': path.resolve(__dirname, './src/features/transactions'),
+      '@categories': path.resolve(__dirname, './src/features/categories'),
     },
   }
 });

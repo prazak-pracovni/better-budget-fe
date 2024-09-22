@@ -1,27 +1,18 @@
 import React, { HTMLInputTypeAttribute } from 'react';
 import { FieldValues, RegisterOptions, useFormContext } from 'react-hook-form';
 
-interface IInputProps {
+interface Props {
   id: string;
   type: HTMLInputTypeAttribute;
   name: string;
   label: string;
+  validation: RegisterOptions<FieldValues, string>;
   fullWidth?: boolean;
   showLabel?: boolean;
   placeholder?: string;
-  validation: RegisterOptions<FieldValues, string>;
 }
 
-const Input: React.FC<IInputProps> = ({
-  id,
-  type,
-  name,
-  label,
-  placeholder,
-  validation,
-  fullWidth,
-  showLabel = true,
-}) => {
+const Input: React.FC<Props> = ({ id, type, name, label, placeholder, validation, fullWidth, showLabel = true }) => {
   const {
     register,
     formState: { errors },

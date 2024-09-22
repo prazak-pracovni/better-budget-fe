@@ -23,7 +23,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@authentication/*": ["./src/features/authentication/*"],
-      "@transactions/*": ["./src/features/transactions/*"]
+      "@transactions/*": ["./src/features/transactions/*"],
+      "@categories/*": ["./src/features/categories/*"]
     }
   },
   "include": ["src"]

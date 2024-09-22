@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { ICategory } from '@transactions/interfaces/category.interface';
+import { ICategory } from '@categories/interfaces/category.interface';
 import { EllipsisVerticalIcon } from '@heroicons/react/16/solid';
 import useClickOutside from '@/hooks/useClickOutside';
 import { useRemoveCategory } from '../api/useRemoveCategory';
@@ -19,17 +19,14 @@ const CategoryItem: React.FC<Props> = ({ category }) => {
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
-  }
+  };
 
   const handleCategoryRemove = () => {
     mutateRemove(category);
   };
 
   return (
-    <div
-      key={category.id}
-      className="flex items-center justify-between px-4 py-2 bg-white border border-gray-200 rounded-md shadow-sm"
-    >
+    <div className="flex items-center justify-between px-4 py-2 bg-white border border-gray-200 rounded-md shadow-sm">
       <span className="text-sm text-gray-700">{category.title}</span>
       <div className="relative">
         <button className="p-1" onClick={toggleDropdown}>
@@ -42,10 +39,17 @@ const CategoryItem: React.FC<Props> = ({ category }) => {
           role="menu"
         >
           <div className="p-2">
-            <button className="block w-full px-2 py-2 text-sm text-left text-gray-700 hover:bg-gray-100" role="menuitem">
+            <button
+              className="block w-full px-2 py-2 text-sm text-left text-gray-700 hover:bg-gray-100"
+              role="menuitem"
+            >
               Edit
             </button>
-            <button onClick={handleCategoryRemove} className="block w-full px-2 py-2 text-sm text-left text-gray-700 hover:bg-gray-100" role="menuitem">
+            <button
+              onClick={handleCategoryRemove}
+              className="block w-full px-2 py-2 text-sm text-left text-gray-700 hover:bg-gray-100"
+              role="menuitem"
+            >
               Remove
             </button>
           </div>

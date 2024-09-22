@@ -1,10 +1,10 @@
-import { ETrancactionType } from "@transactions/enums/transaction-type.interface";
+import { ETransactionType } from "@/features/transactions/enums/transaction-type.enum";
 
 export interface ITransaction {
     id: string;
-    amount: number;
-    type: ETrancactionType;
     title: string;
+    amount: number;
+    type: ETransactionType;
     date: string;
     categoryId?: string;
     description?: string;
