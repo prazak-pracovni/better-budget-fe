@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useLoginUser } from '@authentication/api/useLoginUser';
 import Input from '@/components/Form/Input';
 import { IUserLogin } from '@authentication/interfaces/user-auth.interface';
-
+import { EMAIL_REGEX } from '@/constants/register-regex';
 
 const LoginForm = () => {
   const methods = useForm<IUserLogin>({ mode: 'onTouched' });
@@ -32,6 +32,10 @@ const LoginForm = () => {
             type="email"
             validation={{
               required: { value: true, message: 'Email is required' },
+              pattern: {
+                value: EMAIL_REGEX,
+                message: 'Email must be a valid email address',
+              },
             }}
           ></Input>
           <Input
