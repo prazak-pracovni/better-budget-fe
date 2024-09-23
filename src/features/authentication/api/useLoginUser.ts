@@ -8,7 +8,7 @@ interface ILoginResponse {
   accessToken: string;
 }
 
-const loginUser = async (userLogin: IUserLogin) => {
+const loginUser = async (userLogin: IUserLogin): Promise<ILoginResponse> => {
   const { data } = await axios.post(`/api/auth/login`, userLogin, { withCredentials: true });
   return data;
 };
@@ -19,7 +19,7 @@ export const useLoginUser = () => {
 
   const mutation = useMutation({
     mutationFn: (userLogin: IUserLogin) => loginUser(userLogin),
-    onSuccess: ({ accessToken }: ILoginResponse) => {
+    onSuccess: ({ accessToken }) => {
       setAccessToken(accessToken);
       navigate('/dashboard', { replace: true });
     },
