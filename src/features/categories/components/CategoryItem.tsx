@@ -9,11 +9,11 @@ interface Props {
 }
 
 const CategoryItem: React.FC<Props> = ({ category }) => {
-  const DropdownRef = useRef(null);
+  const dropdownRef = useRef(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { mutate: mutateRemove } = useRemoveCategory();
 
-  useClickOutside(DropdownRef, () => {
+  useClickOutside(dropdownRef, () => {
     setIsDropdownOpen(false);
   });
 
@@ -34,7 +34,7 @@ const CategoryItem: React.FC<Props> = ({ category }) => {
           <EllipsisVerticalIcon className="w-4 h-4"></EllipsisVerticalIcon>
         </button>
         <div
-          ref={DropdownRef}
+          ref={dropdownRef}
           className={`absolute end-0 z-10 mt-2 w-36 rounded-md border border-gray-100 bg-white shadow-lg ${isDropdownOpen ? 'block' : 'hidden'} `}
           role="menu"
         >

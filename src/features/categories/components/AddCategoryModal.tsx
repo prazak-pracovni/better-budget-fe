@@ -1,50 +1,36 @@
-import { useState } from 'react';
 import Modal from 'react-modal';
-import { XMarkIcon } from '@heroicons/react/16/solid';
 import AddCategoryForm from './AddCategoryForm';
-import CategoryList from './CategoryList';
 
-const AddCategoryModal = () => {
-  const [isModalOpened, setIsModalOpened] = useState(false);
+interface Props {
+  isOpened: boolean;
+  closeModal: () => void;
+}
 
-  const openModal = () => {
-    setIsModalOpened(true);
-  };
-
+const AddCategoryModal: React.FC<Props> = ({ isOpened, closeModal }) => {
   return (
     <>
-      <button
-        className="rounded-md bg-blue-600 px-5 mb-4 py-2.5 text-sm font-medium text-white shadow"
-        onClick={openModal}
-      >
-        View categories
-      </button>
       <Modal
-        isOpen={isModalOpened}
+        isOpen={isOpened}
         style={{
           overlay: {
             width: '100vw',
             height: '100vh',
             backgroundColor: 'rgba(0, 0, 0, 0.2)',
+            zIndex: 1000,
           },
           content: {
-            width: '60vw',
-            height: 'calc(100vh - 8rem)',
+            width: '25rem',
+            height: '16rem',
             margin: 'auto',
             padding: '0px',
             borderRadius: '12px',
+            zIndex: 1000,
           },
         }}
       >
-        <div className="w-full flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="font-medium">Categories</h2>
-          <button onClick={() => setIsModalOpened(false)}>
-            <XMarkIcon className="size-6 text-gray-950" />
-          </button>
-        </div>
-        <div className="w-full flex flex-col p-6">
-          <AddCategoryForm></AddCategoryForm>
-          <CategoryList></CategoryList>
+        <div className="w-full h-full item-center justify-center flex flex-col p-6">
+          <h3 className="mb-6 text-lg font-semibold text-gray-700">Add new category</h3>
+          <AddCategoryForm closeModal={closeModal}></AddCategoryForm>
         </div>
       </Modal>
     </>

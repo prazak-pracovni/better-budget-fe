@@ -1,18 +1,20 @@
 import Input from '@/components/Form/Input';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { ITransaction } from '@transactions/interfaces/transaction.interface';
 import { useAddTransaction } from '@transactions/api/useAddTransaction';
 import Select from '@/components/Form/Select';
 import { TRANSACTION_TYPES } from '@transactions/constants/transaction-types';
-import { ETransactionType } from '@transactions/enums/transaction-type.enum';
 import { ICategory } from '@categories/interfaces/category.interface';
+import AddCategoryModal from '@/features/categories/components/AddCategoryModal';
+import { useState } from 'react';
 
 interface Props {
   categories: ICategory[] | undefined;
 }
 
-const AddTransactionForm:React.FC<Props> = ({ categories }) => {
+const AddTransactionForm: React.FC<Props> = ({ categories }) => {
   const methods = useForm<ITransaction>({ mode: 'onTouched' });
+  const [isModalOpened, setIsModalOpened] = useState(false);
   const { mutate } = useAddTransaction();
 
   const onSubmit: SubmitHandler<ITransaction> = (transaction) => {
@@ -20,10 +22,19 @@ const AddTransactionForm:React.FC<Props> = ({ categories }) => {
     methods.reset();
   };
 
+  const openCategoryModal = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsModalOpened(true);
+  };
+
+  const closeCategoryModal = () => {
+    setIsModalOpened(false);
+  };
+
   return (
     <div className="mb-4">
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)} className="flex items-center gap-6">
+        <form id="transaction-form" onSubmit={methods.handleSubmit(onSubmit)} className="flex items-center gap-6">
           <Input
             label="Transaction name"
             id="title"
@@ -42,26 +53,47 @@ const AddTransactionForm:React.FC<Props> = ({ categories }) => {
               required: { value: true, message: 'Amount is required' },
             }}
           ></Input>
-          <Select
-            label="Type"
-            id="type"
+          <Controller
+            control={methods.control}
             name="type"
-            validation={{
-              required: { value: true, message: 'Type is required' },
-            }}
-            defaultValue={ETransactionType.EXPENSE}
-            options={Object.values(TRANSACTION_TYPES).map((type) => ({ label: type.label, value: type.value }))}
-          ></Select>
-          <Select
-            label="Category"
-            id="categoryId"
+            rules={{ required: { value: true, message: 'Transaction type required' } }}
+            render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+              <Select
+                label="Transaction type"
+                id="type"
+                options={Object.values(TRANSACTION_TYPES).map((type) => ({
+                  id: type.value,
+                  label: type.label,
+                  value: type.value,
+                }))}
+                selectedId={value}
+                error={error}
+                onBlur={onBlur}
+                onSelect={onChange}
+              ></Select>
+            )}
+          ></Controller>
+          <Controller
+            control={methods.control}
             name="categoryId"
-            defaultValue={''}
-            validation={{
-              required: { value: true, message: 'Category is required' },
-            }}
-            options={categories?.map((category) => ({ label: category.title, value: category.id })) || []}
-          ></Select>
+            rules={{ required: { value: true, message: 'Category is required' } }}
+            render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+              <Select
+                label="Category"
+                id="categoryId"
+                placeholder="Select category"
+                options={
+                  categories?.map((category) => ({ id: category.id, label: category.title, value: category.id })) || []
+                }
+                actionButton={{ label: '+ Add category', onClick: (e) => openCategoryModal(e) }}
+                error={error}
+                selectedId={value}
+                keepEditing={isModalOpened}
+                onBlur={onBlur}
+                onSelect={onChange}
+              ></Select>
+            )}
+          ></Controller>
           <Input
             label="Date"
             id="date"
@@ -80,6 +112,7 @@ const AddTransactionForm:React.FC<Props> = ({ categories }) => {
           </button>
         </form>
       </FormProvider>
+      <AddCategoryModal isOpened={isModalOpened} closeModal={closeCategoryModal}></AddCategoryModal>
     </div>
   );
 };

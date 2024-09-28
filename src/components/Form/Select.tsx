@@ -1,40 +1,131 @@
-import React from 'react';
-import { FieldValues, RegisterOptions, useFormContext } from 'react-hook-form';
+import useClickOutside from '@/hooks/useClickOutside';
+import { IActionButton } from '@/interfaces/action-button.interface';
+import { IOption } from '@/interfaces/option.interface';
+import { TDropdownPosition } from '@/types/dropdown-position';
+import { ChevronDownIcon } from '@heroicons/react/16/solid';
+import classNames from 'classnames';
+import React, { useEffect, useRef, useState } from 'react';
+import { FieldError } from 'react-hook-form';
 
 interface Props {
   id: string;
-  name: string;
   label: string;
-  defaultValue: string;
-  options: { value: string; label: string }[];
-  validation: RegisterOptions<FieldValues, string>;
+  options: IOption[];
+  actionButton?: IActionButton;
+  placeholder?: string;
+  selectedId?: string;
+  error?: FieldError;
+  keepEditing?: boolean;
+  position?: TDropdownPosition;
   fullWidth?: boolean;
+  onBlur: (blurred: boolean) => void;
+  onSelect: (id: string) => void;
 }
 
-const Select: React.FC<Props> = ({ id, name, label, defaultValue, options, validation, fullWidth }) => {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext<{ [x: string]: string }>();
+const Select: React.FC<Props> = ({
+  id,
+  label,
+  options,
+  actionButton,
+  placeholder,
+  selectedId,
+  error,
+  keepEditing,
+  position,
+  fullWidth,
+  onBlur,
+  onSelect,
+}) => {
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<IOption | undefined>(
+    selectedId ? options.find((option) => option.id === selectedId) : undefined,
+  );
+
+  useEffect(() => {
+    if (selectedId) {
+      const newSelectedItem = options.find((option) => option.id === selectedId);
+      if (newSelectedItem) {
+        setSelectedItem(newSelectedItem);
+      }
+    } else {
+      setSelectedItem(undefined);
+    }
+  }, [selectedId, options]);
+
+  useClickOutside(dropdownRef, () => {
+    if (isOpen && !keepEditing) {
+      onBlur(true);
+    }
+    setIsOpen(false);
+  });
+
+  const handleChange = (item: IOption) => {
+    onSelect(item.id);
+    setIsOpen(false);
+  };
+
+  const dropdownClass = classNames(
+    'absolute z-10 mt-2 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg',
+    {
+      'top-full right-0 mt-2': position === 'bottom-right',
+      'top-full left-0 mt-2': position === 'bottom-left',
+      'bottom-full right-0 mb-2': position === 'top-right',
+      'bottom-full left-0 mb-2': position === 'top-left',
+    },
+  );
 
   return (
-    <div className={`flex flex-col items-left ${fullWidth && 'w-full'}`}>
-      <label htmlFor={id} className="block text-sm font-medium text-gray-900">
+    <div ref={dropdownRef} className={`flex flex-col items-left ${fullWidth && 'w-full'}`}>
+      <label htmlFor={id} className="block text-sm font-medium text-gray-700">
         {label}
       </label>
-      <select
-        id={id}
-        defaultValue={defaultValue}
-        className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
-        {...register(name, validation)}
-      >
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-      <span className="text-red-500 text-sm min-h-5">{errors[name] ? errors[name]?.message : ' '}</span>
+      <div className="relative">
+        <button
+          id={id}
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle dropdown"
+          aria-haspopup="true"
+          aria-expanded={isOpen}
+          type="button"
+          className={`w-40 flex gap-x-2 items-center justify-between mt-1 px-3 py-2 rounded-md border bg-white  ${error && 'border-red-500'}`}
+        >
+          <span
+            className={`whitespace-nowrap overflow-hidden text-ellipsis text-sm ${selectedItem ? 'text-gray-700' : 'text-gray-400'}`}
+          >
+            {selectedItem?.label || placeholder}
+          </span>
+          <ChevronDownIcon className="w-5 h-5 shrink-0 fill-gray-600"></ChevronDownIcon>
+        </button>
+        {isOpen && (
+          <div className={dropdownClass} role="menu">
+            <ul className="p-2">
+              {options.map((option) => (
+                <li
+                  key={option.id}
+                  onClick={() => handleChange(option)}
+                  className={
+                    'block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700 cursor-pointer'
+                  }
+                >
+                  <span>{option.label}</span>
+                </li>
+              ))}
+            </ul>
+            {actionButton && (
+              <div className="p-2">
+                <button
+                  className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-blue-600 hover:bg-gray-50"
+                  onClick={actionButton.onClick}
+                >
+                  {actionButton.label}
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+      <span className="text-red-500 text-sm min-h-5">{error?.message}</span>
     </div>
   );
 };
