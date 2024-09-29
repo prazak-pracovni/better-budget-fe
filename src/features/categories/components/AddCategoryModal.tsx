@@ -28,8 +28,8 @@ const AddCategoryModal: React.FC<Props> = ({ isOpened, closeModal }) => {
           },
         }}
       >
-        <div className="w-full h-full item-center justify-center flex flex-col p-6">
-          <h3 className="mb-6 text-lg font-semibold text-gray-700">Add new category</h3>
+        <div className="w-full h-full items-center justify-center flex flex-col p-6">
+          <h3 className="w-full mb-6 text-lg font-semibold text-gray-700">Add new category</h3>
           <AddCategoryForm closeModal={closeModal}></AddCategoryForm>
         </div>
       </Modal>

@@ -66,7 +66,7 @@ const Select: React.FC<Props> = ({
   };
 
   const dropdownClass = classNames(
-    'absolute z-10 mt-2 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg',
+    `absolute z-10 mt-2 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg ${fullWidth && 'w-full'}`,
     {
       'top-full right-0 mt-2': position === 'bottom-right',
       'top-full left-0 mt-2': position === 'bottom-left',
@@ -88,7 +88,7 @@ const Select: React.FC<Props> = ({
           aria-haspopup="true"
           aria-expanded={isOpen}
           type="button"
-          className={`w-40 flex gap-x-2 items-center justify-between mt-1 px-3 py-2 rounded-md border bg-white  ${error && 'border-red-500'}`}
+          className={`w-40 flex gap-x-2 items-center justify-between mt-1 px-3 py-2 rounded-md border bg-white  ${error && 'border-red-500'} ${fullWidth && 'w-full'}`}
         >
           <span
             className={`whitespace-nowrap overflow-hidden text-ellipsis text-sm ${selectedItem ? 'text-gray-700' : 'text-gray-400'}`}

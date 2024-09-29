@@ -18,7 +18,7 @@ const AddCategoryForm: React.FC<Props> = ({ closeModal }) => {
 
   return (
     <FormProvider {...methods}>
-      <form id="category-form" onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col items-center gap-2">
+      <form id="category-form" onSubmit={methods.handleSubmit(onSubmit)} className="w-full flex flex-col items-center gap-2">
         <Input
           label="Category name"
           id="title"
