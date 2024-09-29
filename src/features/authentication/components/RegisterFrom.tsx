@@ -2,8 +2,9 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { useRegisterUser } from '@authentication/api/useRegisterUser';
 import { EMAIL_REGEX, PASSWORD_REGEX, USERNAME_REGEX } from '@/constants/register-regex';
-import Input from '@/components/Form/Input';
+import Input from '@/components/form/Input';
 import { IUserRegister } from '@authentication/interfaces/user-auth.interface';
+import Button from '@/components/ui/Button';
 
 const RegisterForm = () => {
   const methods = useForm<IUserRegister>({ mode: 'onTouched' });
@@ -63,13 +64,9 @@ const RegisterForm = () => {
               },
             }}
           ></Input>
-
-          <button
-            type="submit"
-            className="w-full inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
-          >
+          <Button variant="primary" type="submit">
             Register
-          </button>
+          </Button>
           <p className="mt-4 text-sm text-gray-500 sm:mt-0">
             Already have an account?
             <Link to={'/login'} className="ml-1 text-gray-700 underline">

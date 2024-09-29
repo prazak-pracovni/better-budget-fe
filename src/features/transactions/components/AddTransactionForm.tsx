@@ -1,12 +1,13 @@
-import Input from '@/components/Form/Input';
+import Input from '@/components/form/Input';
 import { Controller, FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { ITransaction } from '@transactions/interfaces/transaction.interface';
 import { useAddTransaction } from '@transactions/api/useAddTransaction';
-import Select from '@/components/Form/Select';
+import Select from '@/components/form/Select';
 import { TRANSACTION_TYPES } from '@transactions/constants/transaction-types';
 import { ICategory } from '@categories/interfaces/category.interface';
 import AddCategoryModal from '@/features/categories/components/AddCategoryModal';
 import { useState } from 'react';
+import Button from '@/components/ui/Button';
 
 interface Props {
   categories: ICategory[] | undefined;
@@ -116,19 +117,12 @@ const AddTransactionForm: React.FC<Props> = ({ categories, closeModal }) => {
             }}
           ></Input>
           <div className="w-full flex items-center gap-2">
-            <button
-              type="button"
-              onClick={closeModal}
-              className="inline-block h-full w-full rounded-md border border-gray-100 bg-gray-100 px-6 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-200"
-            >
+            <Button variant="tertiary" fullWidth={true} type="button" onClick={closeModal}>
               Cancel
-            </button>
-            <button
-              type="submit"
-              className="inline-block h-full w-full rounded-md border border-blue-600 bg-blue-600 px-6 py-2 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
-            >
+            </Button>
+            <Button variant="primary" fullWidth={true} type="submit">
               Add transaction
-            </button>
+            </Button>
           </div>
         </form>
       </FormProvider>

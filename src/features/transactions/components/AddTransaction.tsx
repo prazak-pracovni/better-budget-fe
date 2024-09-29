@@ -2,6 +2,7 @@ import { useGetCategories } from '@/features/categories/api/useGetCategories';
 import TransactionList from './TransactionList';
 import { useState } from 'react';
 import AddTransactionModal from './AddTransactionModal';
+import Button from '@/components/ui/Button';
 
 const AddTransaction = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -14,13 +15,9 @@ const AddTransaction = () => {
   return (
     <div className="flex flex-col items-end">
       <div className="mb-4">
-        <button
-          onClick={() => setIsModalOpened(true)}
-          type="button"
-          className="inline-block h-full rounded-md border border-blue-600 bg-blue-600 px-6 py-2 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
-        >
+        <Button variant="primary" type="button" onClick={() => setIsModalOpened(true)}>
           + Add transaction
-        </button>
+        </Button>
         <AddTransactionModal categories={categories} isOpened={isModalOpened} closeModal={closeModal} />
       </div>
       <div className="w-full">

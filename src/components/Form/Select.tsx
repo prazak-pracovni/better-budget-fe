@@ -3,7 +3,6 @@ import { IActionButton } from '@/interfaces/action-button.interface';
 import { IOption } from '@/interfaces/option.interface';
 import { TDropdownPosition } from '@/types/dropdown-position';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
-import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
 import { FieldError } from 'react-hook-form';
 
@@ -36,7 +35,7 @@ const Select: React.FC<Props> = ({
   onBlur,
   onSelect,
 }) => {
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const selectRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<IOption | undefined>(
     selectedId ? options.find((option) => option.id === selectedId) : undefined,
@@ -53,7 +52,7 @@ const Select: React.FC<Props> = ({
     }
   }, [selectedId, options]);
 
-  useClickOutside(dropdownRef, () => {
+  useClickOutside(selectRef, () => {
     if (isOpen && !keepEditing) {
       onBlur(true);
     }
@@ -65,18 +64,16 @@ const Select: React.FC<Props> = ({
     setIsOpen(false);
   };
 
-  const dropdownClass = classNames(
-    `absolute z-10 mt-2 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg ${fullWidth && 'w-full'}`,
-    {
-      'top-full right-0 mt-2': position === 'bottom-right',
-      'top-full left-0 mt-2': position === 'bottom-left',
-      'bottom-full right-0 mb-2': position === 'top-right',
-      'bottom-full left-0 mb-2': position === 'top-left',
-    },
-  );
+  const baseClass = `absolute z-10 mt-2 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg ${fullWidth && 'w-full'}`;
+
+  const selectMenuClass = `${baseClass}
+    ${position === 'bottom-right' && 'top-full right-0 mt-2'}
+    ${position === 'bottom-left' && 'top-full left-0 mt-2'}
+    ${position === 'top-right' && 'bottom-full right-0 mb-2'}
+    ${position === 'top-left' && 'bottom-full left-0 mb-2'}`;
 
   return (
-    <div ref={dropdownRef} className={`flex flex-col items-left ${fullWidth && 'w-full'}`}>
+    <div ref={selectRef} className={`flex flex-col items-left ${fullWidth && 'w-full'}`}>
       <label htmlFor={id} className="block text-sm font-medium text-gray-700">
         {label}
       </label>
@@ -84,7 +81,7 @@ const Select: React.FC<Props> = ({
         <button
           id={id}
           onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle dropdown"
+          aria-label="Toggle select menu"
           aria-haspopup="true"
           aria-expanded={isOpen}
           type="button"
@@ -98,7 +95,7 @@ const Select: React.FC<Props> = ({
           <ChevronDownIcon className="w-5 h-5 shrink-0 fill-gray-600"></ChevronDownIcon>
         </button>
         {isOpen && (
-          <div className={dropdownClass} role="menu">
+          <div className={selectMenuClass} role="menu">
             <ul className="p-2">
               {options.map((option) => (
                 <li

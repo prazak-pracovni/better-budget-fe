@@ -1,9 +1,10 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { useLoginUser } from '@authentication/api/useLoginUser';
-import Input from '@/components/Form/Input';
+import Input from '@/components/form/Input';
 import { IUserLogin } from '@authentication/interfaces/user-auth.interface';
 import { EMAIL_REGEX } from '@/constants/register-regex';
+import Button from '@/components/ui/Button';
 
 const LoginForm = () => {
   const methods = useForm<IUserLogin>({ mode: 'onTouched' });
@@ -47,12 +48,9 @@ const LoginForm = () => {
               required: { value: true, message: 'Password is required' },
             }}
           ></Input>
-          <button
-            type="submit"
-            className="w-full inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
-          >
+          <Button variant="primary" type="submit">
             Login
-          </button>
+          </Button>
           <p className="mt-4 text-sm text-gray-500 sm:mt-0">
             Don't have an account yet?
             <Link to={'/register'} className="ml-1 text-gray-700 underline">
