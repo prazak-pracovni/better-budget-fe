@@ -25,7 +25,7 @@ const AddCategoryModal: React.FC<Props> = ({ isOpened, closeModal, categories })
             zIndex: 30,
           },
           content: {
-            inset: '10rem',
+            inset: '5rem',
             width: '35rem',
             height: 'max-content',
             maxHeight: 'calc(100vh - 10rem)',
