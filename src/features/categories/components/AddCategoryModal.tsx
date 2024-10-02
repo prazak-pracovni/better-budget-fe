@@ -16,15 +16,15 @@ const AddCategoryModal: React.FC<Props> = ({ isOpened, closeModal }) => {
             width: '100vw',
             height: '100vh',
             backgroundColor: 'rgba(0, 0, 0, 0.2)',
-            zIndex: 1000,
+            zIndex: 30,
           },
           content: {
-            width: '25rem',
-            height: '16rem',
-            margin: 'auto',
+            inset: '16rem',
+            width: '28rem',
+            height: 'max-content',
+            margin: '0 auto',
             padding: '0px',
             borderRadius: '12px',
-            zIndex: 1000,
           },
         }}
       >

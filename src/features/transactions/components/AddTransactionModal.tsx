@@ -16,20 +16,23 @@ const AddCategoryModal: React.FC<Props> = ({ isOpened, closeModal, categories })
         isOpen={isOpened}
         style={{
           overlay: {
-            width: '100vw',
-            height: '100vh',
+            position: 'fixed',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
             backgroundColor: 'rgba(0, 0, 0, 0.2)',
-            zIndex: 1000,
+            zIndex: 30,
           },
           content: {
-            width: '100%',
+            inset: '10rem',
+            width: '35rem',
             height: 'max-content',
-            maxWidth: '35rem',
-          
-            margin: 'auto',
+            maxHeight: 'calc(100vh - 10rem)',
+            overflow: 'auto',
             padding: '0px',
+            margin: '0 auto',
             borderRadius: '12px',
-            zIndex: 1000,
           },
         }}
       >

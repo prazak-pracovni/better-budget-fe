@@ -1,9 +1,9 @@
 import useClickOutside from '@/hooks/useClickOutside';
 import { IActionButton } from '@/interfaces/action-button.interface';
 import { IOption } from '@/interfaces/option.interface';
-import { TDropdownPosition } from '@/types/dropdown-position';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
 import React, { useEffect, useRef, useState } from 'react';
+import ReactDOM from 'react-dom';
 import { FieldError } from 'react-hook-form';
 
 interface Props {
@@ -15,7 +15,6 @@ interface Props {
   selectedId?: string;
   error?: FieldError;
   keepEditing?: boolean;
-  position?: TDropdownPosition;
   fullWidth?: boolean;
   onBlur: (blurred: boolean) => void;
   onSelect: (id: string) => void;
@@ -30,16 +29,17 @@ const Select: React.FC<Props> = ({
   selectedId,
   error,
   keepEditing,
-  position,
   fullWidth,
   onBlur,
   onSelect,
 }) => {
   const selectRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<IOption | undefined>(
     selectedId ? options.find((option) => option.id === selectedId) : undefined,
   );
+  const [dropdownStyle, setDropdownStyle] = useState({});
 
   useEffect(() => {
     if (selectedId) {
@@ -52,26 +52,30 @@ const Select: React.FC<Props> = ({
     }
   }, [selectedId, options]);
 
-  useClickOutside(selectRef, () => {
+  useEffect(() => {
+    if (isOpen && selectRef.current) {
+      const rect = selectRef.current.getBoundingClientRect();
+
+      setDropdownStyle({
+        width: rect.width,
+        top: `${rect.bottom + window.scrollY - 8}px`,
+        left: `${rect.left + window.scrollX}px`,
+      });
+    }
+  }, [isOpen]);
+
+  useClickOutside([selectRef, dropdownRef], () => {
     if (isOpen && !keepEditing) {
       onBlur(true);
+      setIsOpen(false);
     }
-    setIsOpen(false);
   });
 
   const handleChange = (item: IOption) => {
     onSelect(item.id);
+    setSelectedItem(item);
     setIsOpen(false);
   };
-
-  const baseClass = `absolute z-10 mt-2 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg ${fullWidth && 'w-full'}`;
-
-  const selectMenuClass = `${baseClass}
-    ${position === 'bottom-right' && 'top-full right-0 mt-2'}
-    ${position === 'bottom-left' && 'top-full left-0 mt-2'}
-    ${position === 'top-right' && 'bottom-full right-0 mb-2'}
-    ${position === 'top-left' && 'bottom-full left-0 mb-2'}`;
-
   return (
     <div ref={selectRef} className={`flex flex-col items-left ${fullWidth && 'w-full'}`}>
       <label htmlFor={id} className="block text-sm font-medium text-gray-700">
@@ -94,33 +98,45 @@ const Select: React.FC<Props> = ({
           </span>
           <ChevronDownIcon className="w-5 h-5 shrink-0 fill-gray-600"></ChevronDownIcon>
         </button>
-        {isOpen && (
-          <div className={selectMenuClass} role="menu">
-            <ul className="p-2">
-              {options.map((option) => (
-                <li
-                  key={option.id}
-                  onClick={() => handleChange(option)}
-                  className={
-                    'block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700 cursor-pointer'
-                  }
-                >
-                  <span>{option.label}</span>
-                </li>
-              ))}
-            </ul>
-            {actionButton && (
-              <div className="p-2">
-                <button
-                  className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-blue-600 hover:bg-gray-50"
-                  onClick={actionButton.onClick}
-                >
-                  {actionButton.label}
-                </button>
+        {isOpen &&
+          ReactDOM.createPortal(
+            <div className="fixed inset-0 z-30">
+              <div
+                ref={dropdownRef}
+                className={`absolute z-30 mt-2 w-56 max-h-96 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg ${fullWidth && 'w-full'}`}
+                style={dropdownStyle}
+                role="menu"
+              >
+                <ul className="p-2">
+                  {options.map((option) => (
+                    <li
+                      key={option.id}
+                      onClick={() => handleChange(option)}
+                      className={
+                        'block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700 cursor-pointer'
+                      }
+                    >
+                      <span>{option.label}</span>
+                    </li>
+                  ))}
+                </ul>
+                {actionButton && (
+                  <div className="p-2">
+                    <button
+                      className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-blue-600 hover:bg-gray-50"
+                      onClick={(e) => {
+                        actionButton.onClick(e);
+                        setIsOpen(false);
+                      }}
+                    >
+                      {actionButton.label}
+                    </button>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        )}
+            </div>,
+            document.body,
+          )}
       </div>
       <span className="text-red-500 text-sm min-h-5">{error?.message}</span>
     </div>
