@@ -12,28 +12,39 @@ interface Props {
   placeholder?: string;
 }
 
-const Input: React.FC<Props> = ({ id, type, name, label, placeholder, validation, fullWidth, showLabel = true }) => {
+const ColorInput: React.FC<Props> = ({
+  id,
+  type,
+  name,
+  label,
+  placeholder,
+  validation,
+  fullWidth,
+  showLabel = true,
+}) => {
   const {
     register,
     formState: { errors },
   } = useFormContext<{ [x: string]: string }>();
 
   return (
-    <div className={`flex flex-col items-left ${fullWidth && 'w-full'}`}>
+    <div className={`flex flex-col items-center ${fullWidth && 'w-full'}`}>
       <label htmlFor={id} className={`block text-sm font-medium text-gray-700 ${!showLabel && 'sr-only'}`}>
         {label}
       </label>
-      <input
-        id={id}
-        type={type}
-        placeholder={placeholder}
-        {...register(name, validation)}
-        autoComplete="off"
-        className={`mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm ${errors[name] && 'border-red-500'}`}
-      />
+      <div className="w-8 h-8 rounded-md overflow-hidden mt-1.5 mb-1">
+        <input
+          id={id}
+          type={type}
+          placeholder={placeholder}
+          {...register(name, validation)}
+          autoComplete="off"
+          className="w-full h-full cursor-pointer scale-150"
+        />
+      </div>
       <span className="text-red-500 text-sm min-h-5">{errors[name] ? errors[name]?.message : ' '}</span>
     </div>
   );
 };
 
-export default Input;
+export default ColorInput;

@@ -3,6 +3,7 @@ import { ICategory } from '@categories/interfaces/category.interface';
 import { useAddCategory } from '@categories/api/useAddCategory';
 import Input from '@/components/form/Input';
 import Button from '@/components/ui/Button';
+import ColorInput from '@/components/form/ColorInput';
 
 interface Props {
   closeModal: () => void;
@@ -24,16 +25,19 @@ const AddCategoryForm: React.FC<Props> = ({ closeModal }) => {
         onSubmit={methods.handleSubmit(onSubmit)}
         className="w-full flex flex-col items-center gap-2"
       >
-        <Input
-          label="Category name"
-          id="title"
-          name="title"
-          type="text"
-          fullWidth={true}
-          validation={{
-            required: { value: true, message: 'Category name is required' },
-          }}
-        ></Input>
+        <div className="w-full flex items-center justify-between gap-4">
+          <ColorInput label="Color" id="color" name="color" type="color"></ColorInput>
+          <Input
+            fullWidth={true}
+            label="Name"
+            id="category-title"
+            name="title"
+            type="text"
+            validation={{
+              required: { value: true, message: 'Category name is required' },
+            }}
+          ></Input>
+        </div>
         <div className="w-full flex flex-col items-center gap-2">
           <Button variant="primary" type="submit">
             Add category

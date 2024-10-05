@@ -1,15 +1,16 @@
 import Modal from 'react-modal';
-import AddTransactionForm from './AddTransactionForm';
 import { ICategory } from '@/features/categories/interfaces/category.interface';
 import { XMarkIcon } from '@heroicons/react/16/solid';
-
+import { ITransaction } from '@transactions/interfaces/transaction.interface';
+import TransactionForm from '@transactions/components/TransactionForm';
 interface Props {
   categories: ICategory[] | undefined;
   isOpened: boolean;
+  transactionToEdit?: ITransaction;
   closeModal: () => void;
 }
 
-const AddCategoryModal: React.FC<Props> = ({ isOpened, closeModal, categories }) => {
+const TransactionModal: React.FC<Props> = ({ isOpened, categories, transactionToEdit, closeModal }) => {
   return (
     <>
       <Modal
@@ -38,14 +39,14 @@ const AddCategoryModal: React.FC<Props> = ({ isOpened, closeModal, categories })
       >
         <div className="divide-y divide-gray-100">
           <div className="flex items-center justify-between p-6">
-            <h3 className="text-lg font-semibold text-gray-700">Add new transaction</h3>
+            <h3 className="text-lg font-semibold text-gray-700">{transactionToEdit ? 'Edit transaction' : 'Add transaction'}</h3>
             <button onClick={closeModal}>
               <span className="sr-only">Close modal</span>
               <XMarkIcon className="w-6 h-6"></XMarkIcon>
             </button>
           </div>
           <div className="w-full h-full items-center justify-center flex flex-col p-6">
-            <AddTransactionForm categories={categories} closeModal={closeModal}></AddTransactionForm>
+            <TransactionForm categories={categories} transactionToEdit={transactionToEdit} closeModal={closeModal}></TransactionForm>
           </div>
         </div>
       </Modal>
@@ -53,4 +54,4 @@ const AddCategoryModal: React.FC<Props> = ({ isOpened, closeModal, categories })
   );
 };
 
-export default AddCategoryModal;
+export default TransactionModal;

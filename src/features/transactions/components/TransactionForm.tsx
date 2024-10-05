@@ -8,19 +8,26 @@ import { ICategory } from '@categories/interfaces/category.interface';
 import AddCategoryModal from '@/features/categories/components/AddCategoryModal';
 import { useState } from 'react';
 import Button from '@/components/ui/Button';
+import { usePatchTransaction } from '@transactions/api/usePatchTransaction';
 
 interface Props {
   categories: ICategory[] | undefined;
+  transactionToEdit?: ITransaction;
   closeModal: () => void;
 }
 
-const AddTransactionForm: React.FC<Props> = ({ categories, closeModal }) => {
-  const methods = useForm<ITransaction>({ mode: 'onTouched' });
+const TransactionForm: React.FC<Props> = ({ categories, transactionToEdit, closeModal }) => {
+  const methods = useForm<ITransaction>({ mode: 'onTouched', defaultValues: transactionToEdit });
   const [isCategoryModalOpened, setIsCategoryModalOpened] = useState(false);
-  const { mutate } = useAddTransaction();
+  const { mutate: mutateAdd } = useAddTransaction();
+  const { mutate: mutateEdit } = usePatchTransaction();
 
-  const onSubmit: SubmitHandler<ITransaction> = (transaction) => {
-    mutate(transaction);
+  const onSubmit: SubmitHandler<ITransaction> = (transactionToSubmit) => {
+    if (transactionToEdit) {
+      mutateEdit(transactionToSubmit);
+    } else {
+      mutateAdd(transactionToSubmit);
+    }
     closeModal();
   };
 
@@ -42,8 +49,8 @@ const AddTransactionForm: React.FC<Props> = ({ categories, closeModal }) => {
           className="w-full flex flex-col items-center gap-4"
         >
           <Input
-            label="Transaction name"
-            id="title"
+            label="Name"
+            id="transaction-title"
             name="title"
             type="text"
             fullWidth={true}
@@ -121,7 +128,7 @@ const AddTransactionForm: React.FC<Props> = ({ categories, closeModal }) => {
               Cancel
             </Button>
             <Button variant="primary" fullWidth={true} type="submit">
-              Add transaction
+              {transactionToEdit ? 'Update trasnaction' : 'Add transaction'}
             </Button>
           </div>
         </form>
@@ -131,4 +138,4 @@ const AddTransactionForm: React.FC<Props> = ({ categories, closeModal }) => {
   );
 };
 
-export default AddTransactionForm;
+export default TransactionForm;

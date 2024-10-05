@@ -1,27 +1,40 @@
 import { useGetCategories } from '@/features/categories/api/useGetCategories';
-import TransactionList from './TransactionList';
 import { useState } from 'react';
-import AddTransactionModal from './AddTransactionModal';
 import Button from '@/components/ui/Button';
+import TransactionTable from '@transactions/components/TransactionTable';
+import { ITransaction } from '@transactions/interfaces/transaction.interface';
+import TransactionModal from '@transactions/components/TransactionModal';
 
 const AddTransaction = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
+  const [transactionToEdit, setTransactionToEdit] = useState<ITransaction | undefined>(undefined);
   const { data: categories } = useGetCategories();
 
   const closeModal = () => {
+    setTransactionToEdit(undefined);
     setIsModalOpened(false);
+  };
+
+  const openModal = (transactionToEdit?: ITransaction) => {
+    setTransactionToEdit(transactionToEdit);
+    setIsModalOpened(true);
   };
 
   return (
     <div className="flex flex-col items-end">
       <div className="mb-4">
-        <Button variant="primary" type="button" onClick={() => setIsModalOpened(true)}>
+        <Button variant="primary" type="button" onClick={openModal}>
           + Add transaction
         </Button>
-        <AddTransactionModal categories={categories} isOpened={isModalOpened} closeModal={closeModal} />
+        <TransactionModal
+          categories={categories}
+          isOpened={isModalOpened}
+          transactionToEdit={transactionToEdit}
+          closeModal={closeModal}
+        />
       </div>
       <div className="w-full">
-        <TransactionList categories={categories} />
+        <TransactionTable categories={categories} openModal={openModal} />
       </div>
     </div>
   );

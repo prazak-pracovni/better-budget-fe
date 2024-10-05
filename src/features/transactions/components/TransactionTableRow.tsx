@@ -5,13 +5,16 @@ import { useMemo, useRef, useState } from 'react';
 import { useRemoveTransaction } from '@transactions/api/useRemoveTransaction';
 import { ICategory } from '@categories/interfaces/category.interface';
 import { ETransactionType } from '@transactions/enums/transaction-type.enum';
+import FlexTableCell from '@/components/ui/table/body/FlexTableCell';
+import FlexTableRow from '@/components/ui/table/body/FlexTableRow';
 
 interface Props {
   transaction: ITransaction;
   categories: ICategory[] | undefined;
+  openModal: (transaction: ITransaction) => void;
 }
 
-const TransactionItem: React.FC<Props> = ({ transaction, categories }) => {
+const TransactionTableRow: React.FC<Props> = ({ transaction, categories, openModal }) => {
   const dropdownRef = useRef(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { mutate: mutateRemove } = useRemoveTransaction();
@@ -22,6 +25,11 @@ const TransactionItem: React.FC<Props> = ({ transaction, categories }) => {
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleTransactionEdit = () => {
+    setIsDropdownOpen(false);
+    openModal(transaction);
   };
 
   const handleTransactionRemove = () => {
@@ -37,35 +45,37 @@ const TransactionItem: React.FC<Props> = ({ transaction, categories }) => {
   }, [transaction]);
 
   return (
-    <div key={transaction.id} className="px-4 py-2 bg-white border border-gray-200 rounded-md shadow-sm">
-      <div className="flex items-center justify-between text-sm text-gray-700">
-        <span className="flex-1">{transaction.title}</span>
-        <span className="flex-1">{categoryTitle}</span>
+    <FlexTableRow>
+      <FlexTableCell>{transaction.title}</FlexTableCell>
+      <FlexTableCell>{categoryTitle}</FlexTableCell>
+      <FlexTableCell>
         <span
-          className={`flex-1 font-semibold ${transaction.type === ETransactionType.EXPENSE ? 'text-red-500' : 'text-green-500'}`}
+          className={`font-medium ${transaction.type === ETransactionType.EXPENSE ? 'text-red-500' : 'text-green-500'}`}
         >
           {transactionAmount}
         </span>
-        <div className="relative">
+      </FlexTableCell>
+      <FlexTableCell isLast={true}>
+        <div className="relative" ref={dropdownRef}>
           <button className="p-1" onClick={toggleDropdown}>
             <span className="sr-only">Category options</span>
             <EllipsisVerticalIcon className="w-4 h-4"></EllipsisVerticalIcon>
           </button>
           <div
-            ref={dropdownRef}
             className={`absolute end-0 z-10 mt-2 w-36 rounded-md border border-gray-100 bg-white shadow-lg ${isDropdownOpen ? 'block' : 'hidden'} `}
             role="menu"
           >
             <div className="p-2">
               <button
-                className="block w-full px-2 py-2 text-sm text-left text-gray-700 hover:bg-gray-100"
+                onClick={handleTransactionEdit}
+                className="block w-full p-2 text-sm text-left text-gray-700 hover:bg-gray-100"
                 role="menuitem"
               >
                 Edit
               </button>
               <button
                 onClick={handleTransactionRemove}
-                className="block w-full px-2 py-2 text-sm text-left text-gray-700 hover:bg-gray-100"
+                className="block w-full p-2 text-sm text-left text-gray-700 hover:bg-gray-100"
                 role="menuitem"
               >
                 Remove
@@ -73,9 +83,9 @@ const TransactionItem: React.FC<Props> = ({ transaction, categories }) => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </FlexTableCell>
+    </FlexTableRow>
   );
 };
 
-export default TransactionItem;
+export default TransactionTableRow;
