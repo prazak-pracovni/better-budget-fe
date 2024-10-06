@@ -1,7 +1,7 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { useLoginUser } from '@authentication/api/useLoginUser';
-import Input from '@/components/form/Input';
+import Input from '@/components/ui/form/Input';
 import { IUserLogin } from '@authentication/interfaces/user-auth.interface';
 import { EMAIL_REGEX } from '@/constants/register-regex';
 import Button from '@/components/ui/Button';

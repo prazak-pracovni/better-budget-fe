@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AuthProvider } from './utils/context/AuthProvider.tsx';
+import { AuthProvider } from './features/authentication/utils/context/AuthProvider.tsx';
 import Modal from 'react-modal';
 
 const queryClient = new QueryClient({

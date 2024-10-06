@@ -5,7 +5,7 @@ interface Props {
 }
 
 const FlexTableHeader: React.FC<Props> = ({ children }) => {
-  return <thead className="bg-gray-100 border-t border-gray-200">{children}</thead>;
+  return <div className="bg-gray-100 border-t border-gray-200">{children}</div>;
 };
 
 export default FlexTableHeader;

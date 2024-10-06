@@ -27,7 +27,7 @@ const TransactionTable: React.FC<Props> = ({ categories, openModal }) => {
       <FlexTableHeader>
         <FlexTableHeaderRow>
           {HEADER_CELLS.map((cell, index) => (
-            <FlexTableHeaderCell key={cell} isLast={index !== HEADER_CELLS.length - 1}>
+            <FlexTableHeaderCell key={cell} className={`${index === HEADER_CELLS.length - 1 ? 'justify-end' : ''}`}>
               {cell}
             </FlexTableHeaderCell>
           ))}

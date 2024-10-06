@@ -6,7 +6,7 @@ interface Props {
 
 const FlexTableRow:React.FC<Props> = ({children}) => {
   return (
-    <tr>{children}</tr>
+    <div role="row" className='flex'>{children}</div>
   )
 }
 

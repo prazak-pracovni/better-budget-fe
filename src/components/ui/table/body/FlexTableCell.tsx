@@ -2,12 +2,14 @@ import React from 'react';
 
 interface Props {
   children: React.ReactNode;
-  isLast?: boolean;
+  className?: string;
 }
 
-const FlexTableCell: React.FC<Props> = ({ children, isLast }) => {
+const FlexTableCell: React.FC<Props> = ({ children, className }) => {
   return (
-    <td className={`whitespace-nowrap px-4 py-4 text-gray-700  ${isLast && 'text-right'}`}>{children}</td>
+    <div role="cell" className={`flex flex-1 whitespace-nowrap px-4 py-4 text-gray-700 ${className || ''}`}>
+      {children}
+    </div>
   );
 };
 

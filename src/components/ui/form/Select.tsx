@@ -14,7 +14,6 @@ interface Props {
   placeholder?: string;
   selectedId?: string;
   error?: FieldError;
-  keepEditing?: boolean;
   fullWidth?: boolean;
   onBlur: (blurred: boolean) => void;
   onSelect: (id: string) => void;
@@ -28,23 +27,25 @@ const Select: React.FC<Props> = ({
   placeholder,
   selectedId,
   error,
-  keepEditing,
   fullWidth,
   onBlur,
   onSelect,
 }) => {
   const selectRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpened, setIsOpened] = useState(false);
   const [selectedItem, setSelectedItem] = useState<IOption | undefined>(
     selectedId ? options.find((option) => option.id === selectedId) : undefined,
   );
   const [dropdownStyle, setDropdownStyle] = useState({});
 
   useEffect(() => {
+    console.log('SelectedId', selectedId);
+
     if (selectedId) {
       const newSelectedItem = options.find((option) => option.id === selectedId);
       if (newSelectedItem) {
+        console.log('Set selected item', newSelectedItem);
         setSelectedItem(newSelectedItem);
       }
     } else {
@@ -53,7 +54,7 @@ const Select: React.FC<Props> = ({
   }, [selectedId, options]);
 
   useEffect(() => {
-    if (isOpen && selectRef.current) {
+    if (isOpened && selectRef.current) {
       const rect = selectRef.current.getBoundingClientRect();
 
       setDropdownStyle({
@@ -62,20 +63,21 @@ const Select: React.FC<Props> = ({
         left: `${rect.left + window.scrollX}px`,
       });
     }
-  }, [isOpen]);
+  }, [isOpened]);
 
   useClickOutside([selectRef, dropdownRef], () => {
-    if (isOpen && !keepEditing) {
+    if (isOpened) {
       onBlur(true);
-      setIsOpen(false);
+      setIsOpened(false);
     }
   });
 
   const handleChange = (item: IOption) => {
     onSelect(item.id);
     setSelectedItem(item);
-    setIsOpen(false);
+    setIsOpened(false);
   };
+
   return (
     <div ref={selectRef} className={`flex flex-col items-left ${fullWidth && 'w-full'}`}>
       <label htmlFor={id} className="block text-sm font-medium text-gray-700">
@@ -84,10 +86,10 @@ const Select: React.FC<Props> = ({
       <div className="relative">
         <button
           id={id}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => setIsOpened(!isOpened)}
           aria-label="Toggle select menu"
           aria-haspopup="true"
-          aria-expanded={isOpen}
+          aria-expanded={isOpened}
           type="button"
           className={`w-40 flex gap-x-2 items-center justify-between mt-1 px-3 py-2 rounded-md border bg-white  ${error && 'border-red-500'} ${fullWidth && 'w-full'}`}
         >
@@ -98,7 +100,7 @@ const Select: React.FC<Props> = ({
           </span>
           <ChevronDownIcon className="w-5 h-5 shrink-0 fill-gray-600"></ChevronDownIcon>
         </button>
-        {isOpen &&
+        {isOpened &&
           ReactDOM.createPortal(
             <div className="fixed inset-0 z-30">
               <div
@@ -126,7 +128,7 @@ const Select: React.FC<Props> = ({
                       className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-blue-600 hover:bg-gray-50"
                       onClick={(e) => {
                         actionButton.onClick(e);
-                        setIsOpen(false);
+                        setIsOpened(false);
                       }}
                     >
                       {actionButton.label}

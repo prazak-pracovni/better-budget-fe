@@ -1,8 +1,8 @@
-import Input from '@/components/form/Input';
+import Input from '@/components/ui/form/Input';
 import { Controller, FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { ITransaction } from '@transactions/interfaces/transaction.interface';
 import { useAddTransaction } from '@transactions/api/useAddTransaction';
-import Select from '@/components/form/Select';
+import Select from '@/components/ui/form/Select';
 import { TRANSACTION_TYPES } from '@transactions/constants/transaction-types';
 import { ICategory } from '@categories/interfaces/category.interface';
 import AddCategoryModal from '@/features/categories/components/AddCategoryModal';
@@ -83,8 +83,8 @@ const TransactionForm: React.FC<Props> = ({ categories, transactionToEdit, close
                   label: type.label,
                   value: type.value,
                 }))}
-                selectedId={value}
                 error={error}
+                selectedId={value}
                 onBlur={onBlur}
                 onSelect={onChange}
               ></Select>
@@ -106,7 +106,6 @@ const TransactionForm: React.FC<Props> = ({ categories, transactionToEdit, close
                 actionButton={{ label: '+ Add category', onClick: (e) => openCategoryModal(e) }}
                 error={error}
                 selectedId={value}
-                keepEditing={isCategoryModalOpened}
                 onBlur={onBlur}
                 onSelect={onChange}
               ></Select>

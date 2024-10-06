@@ -2,16 +2,17 @@ import React from 'react';
 
 interface Props {
   children: React.ReactNode;
-  isLast?: boolean;
+  className?: string;
 }
 
-const FlexTableHeaderCell: React.FC<Props> = ({ children, isLast }) => {
+const FlexTableHeaderCell: React.FC<Props> = ({ children, className }) => {
   return (
-    <th
-      className={`whitespace-nowrap px-4 py-4 font-semibold text-sm text-gray-700  ${isLast ? 'text-left' : 'text-right'}`}
+    <div
+      role="columnheader"
+      className={`flex flex-1 whitespace-nowrap px-4 py-4 font-semibold text-sm text-gray-700 ${className || ''}`}
     >
       {children}
-    </th>
+    </div>
   );
 };
 

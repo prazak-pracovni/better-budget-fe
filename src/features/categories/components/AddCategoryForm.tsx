@@ -1,9 +1,9 @@
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { ICategory } from '@categories/interfaces/category.interface';
 import { useAddCategory } from '@categories/api/useAddCategory';
-import Input from '@/components/form/Input';
+import Input from '@/components/ui/form/Input';
 import Button from '@/components/ui/Button';
-import ColorInput from '@/components/form/ColorInput';
+import ColorInput from '@/components/ui/form/ColorInput';
 
 interface Props {
   closeModal: () => void;

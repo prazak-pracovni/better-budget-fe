@@ -1,12 +1,15 @@
-import useClickOutside from '@/hooks/useClickOutside';
 import { EllipsisVerticalIcon } from '@heroicons/react/16/solid';
 import { ITransaction } from '@transactions/interfaces/transaction.interface';
-import { useMemo, useRef, useState } from 'react';
+import { useMemo } from 'react';
 import { useRemoveTransaction } from '@transactions/api/useRemoveTransaction';
 import { ICategory } from '@categories/interfaces/category.interface';
 import { ETransactionType } from '@transactions/enums/transaction-type.enum';
 import FlexTableCell from '@/components/ui/table/body/FlexTableCell';
 import FlexTableRow from '@/components/ui/table/body/FlexTableRow';
+import Dropdown from '@/components/ui/dropdown/Dropdown';
+import DropdownButton from '@/components/ui/dropdown/DropdownButton';
+import DropdownMenu from '@/components/ui/dropdown/DropdownMenu';
+import DropdownItem from '@/components/ui/dropdown/DropdownItem';
 
 interface Props {
   transaction: ITransaction;
@@ -15,20 +18,9 @@ interface Props {
 }
 
 const TransactionTableRow: React.FC<Props> = ({ transaction, categories, openModal }) => {
-  const dropdownRef = useRef(null);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { mutate: mutateRemove } = useRemoveTransaction();
 
-  useClickOutside(dropdownRef, () => {
-    setIsDropdownOpen(false);
-  });
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
   const handleTransactionEdit = () => {
-    setIsDropdownOpen(false);
     openModal(transaction);
   };
 
@@ -55,34 +47,17 @@ const TransactionTableRow: React.FC<Props> = ({ transaction, categories, openMod
           {transactionAmount}
         </span>
       </FlexTableCell>
-      <FlexTableCell isLast={true}>
-        <div className="relative" ref={dropdownRef}>
-          <button className="p-1" onClick={toggleDropdown}>
+      <FlexTableCell className="justify-end">
+        <Dropdown>
+          <DropdownButton>
             <span className="sr-only">Category options</span>
             <EllipsisVerticalIcon className="w-4 h-4"></EllipsisVerticalIcon>
-          </button>
-          <div
-            className={`absolute end-0 z-10 mt-2 w-36 rounded-md border border-gray-100 bg-white shadow-lg ${isDropdownOpen ? 'block' : 'hidden'} `}
-            role="menu"
-          >
-            <div className="p-2">
-              <button
-                onClick={handleTransactionEdit}
-                className="block w-full p-2 text-sm text-left text-gray-700 hover:bg-gray-100"
-                role="menuitem"
-              >
-                Edit
-              </button>
-              <button
-                onClick={handleTransactionRemove}
-                className="block w-full p-2 text-sm text-left text-gray-700 hover:bg-gray-100"
-                role="menuitem"
-              >
-                Remove
-              </button>
-            </div>
-          </div>
-        </div>
+          </DropdownButton>
+          <DropdownMenu width="140">
+            <DropdownItem onClick={handleTransactionEdit}>Edit</DropdownItem>
+            <DropdownItem onClick={handleTransactionRemove}>Remove</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
       </FlexTableCell>
     </FlexTableRow>
   );

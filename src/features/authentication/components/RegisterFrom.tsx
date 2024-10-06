@@ -2,7 +2,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { useRegisterUser } from '@authentication/api/useRegisterUser';
 import { EMAIL_REGEX, PASSWORD_REGEX, USERNAME_REGEX } from '@/constants/register-regex';
-import Input from '@/components/form/Input';
+import Input from '@/components/ui/form/Input';
 import { IUserRegister } from '@authentication/interfaces/user-auth.interface';
 import Button from '@/components/ui/Button';
 
