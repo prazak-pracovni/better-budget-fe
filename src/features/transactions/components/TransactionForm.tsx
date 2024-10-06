@@ -41,7 +41,7 @@ const TransactionForm: React.FC<Props> = ({ categories, transactionToEdit, close
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       <FormProvider {...methods}>
         <form
           id="transaction-form"

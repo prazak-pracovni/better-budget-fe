@@ -12,7 +12,7 @@ import FlexTableHeaderRow from '@/components/ui/table/header/FlexTablHeaderRow';
 
 interface Props {
   categories: ICategory[] | undefined;
-  openModal: (transaction?: ITransaction) => void;
+  openModal: (transaction: ITransaction) => void;
 }
 
 const TransactionTable: React.FC<Props> = ({ categories, openModal }) => {
