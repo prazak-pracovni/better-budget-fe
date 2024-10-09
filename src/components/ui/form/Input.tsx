@@ -18,6 +18,7 @@ const Input: React.FC<Props> = ({ id, type, name, label, placeholder, validation
     formState: { errors },
   } = useFormContext<{ [x: string]: string }>();
 
+
   return (
     <div className={`flex flex-col items-left ${fullWidth && 'w-full'}`}>
       <label htmlFor={id} className={`block text-sm font-medium text-gray-700 ${!showLabel && 'sr-only'}`}>

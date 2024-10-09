@@ -1,1 +1,1 @@
-export const HEADER_CELLS = ['Name', 'Category', 'Amount', 'Actions'];
+export const HEADER_CELLS = ['Name', 'Category', 'Amount', 'Date', 'Actions'];
