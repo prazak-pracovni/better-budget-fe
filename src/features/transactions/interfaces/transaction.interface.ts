@@ -6,6 +6,6 @@ export interface ITransaction {
     amount: number;
     type: ETransactionType;
     date: string;
-    categoryId?: string;
+    categoryId: string;
     description?: string;
 }

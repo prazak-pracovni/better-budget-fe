@@ -1,11 +1,11 @@
-import Graphs from "@/features/dashboard/components/Graphs";
-
+import Graphs from '@/features/dashboard/components/Graphs';
 
 const Dashboard = () => {
   return (
     <>
-      <h1>Dashboard</h1>
-      <Graphs />
+      <div className="pt-8">
+        <Graphs />
+      </div>
     </>
   );
 };

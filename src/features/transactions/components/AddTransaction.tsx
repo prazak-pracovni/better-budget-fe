@@ -21,7 +21,7 @@ const AddTransaction = () => {
   };
 
   return (
-    <div className="flex flex-col items-end mt-8">
+    <div className="flex flex-col items-end pt-8">
       <div className="mb-4">
         <Button variant="primary" type="button" onClick={() => openModal(undefined)}>
           + Add transaction

@@ -5,7 +5,11 @@ const ProtectedLayout = () => {
   return (
     <>
       <ProtectedHeader />
-      <Outlet />
+      <div className="min-h-screen bg-gray-50">
+        <main className="max-w-screen-xl mx-auto">
+          <Outlet />
+        </main>
+      </div>
     </>
   );
 };

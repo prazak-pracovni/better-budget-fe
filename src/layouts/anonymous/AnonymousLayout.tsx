@@ -5,7 +5,9 @@ const AnonymousLayout = () => {
   return (
     <>
       <Header />
-      <Outlet />
+      <div className="max-w-screen-xl mx-auto">
+        <Outlet />
+      </div>
     </>
   );
 };
