@@ -1,1 +1,0 @@
-export type TDropdownPosition = 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';

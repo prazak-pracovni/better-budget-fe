@@ -1,4 +1,4 @@
-import { TButtonVariant } from '@/types/button-variant';
+import { TButtonVariant } from '@/types/button-variant.type';
 import React from 'react';
 
 interface Props {

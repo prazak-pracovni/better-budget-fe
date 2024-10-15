@@ -4,7 +4,7 @@ import PieGraph from './PieGraph';
 import { useGetCategories } from '@/features/categories/api/useGetCategories';
 
 const Graphs = () => {
-  const { data: transactions } = useGetTransactions();
+  const { data: transactions } = useGetTransactions('asc');
   const { data: categories } = useGetCategories();
 
   return (
