@@ -4,7 +4,6 @@ import Loading from '@/components/ui/Loading';
 import TransactionTableRow from '@transactions/components/TransactionTableRow';
 import { ITransaction } from '@transactions/interfaces/transaction.interface';
 import { HEADER_CELLS } from '@transactions/constants/header-cells';
-import FlexTableHeader from '@/components/ui/table/header/FlexTableHeader';
 import FlexTableHeaderCell from '@/components/ui/table/header/FlexTableHeaderCell';
 import FlexTableBody from '@/components/ui/table/body/FlexTableBody';
 import FlexTable from '@/components/ui/table/FlexTable';
@@ -24,15 +23,13 @@ const TransactionTable: React.FC<Props> = ({ categories, openModal }) => {
 
   return (
     <FlexTable>
-      <FlexTableHeader>
-        <FlexTableHeaderRow>
-          {HEADER_CELLS.map((cell, index) => (
-            <FlexTableHeaderCell key={cell} className={`${index === HEADER_CELLS.length - 1 ? 'justify-end' : ''}`}>
-              {cell}
-            </FlexTableHeaderCell>
-          ))}
-        </FlexTableHeaderRow>
-      </FlexTableHeader>
+      <FlexTableHeaderRow>
+        {HEADER_CELLS.map((cell, index) => (
+          <FlexTableHeaderCell key={cell} className={`${index === HEADER_CELLS.length - 1 ? 'justify-end' : ''}`}>
+            {cell}
+          </FlexTableHeaderCell>
+        ))}
+      </FlexTableHeaderRow>
       <FlexTableBody>
         {transactions?.map((transaction) => (
           <TransactionTableRow

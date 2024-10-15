@@ -7,7 +7,7 @@ interface Props {
 
 const FlexTableCell: React.FC<Props> = ({ children, className }) => {
   return (
-    <div role="cell" className={`flex flex-1 whitespace-nowrap px-4 py-4 text-gray-700 ${className || ''}`}>
+    <div role="cell" className={`flex flex-1 whitespace-nowrap px-4 py-4 bg-white text-gray-700 ${className || ''}`}>
       {children}
     </div>
   );

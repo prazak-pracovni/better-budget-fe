@@ -16,8 +16,6 @@ const PieGraph: React.FC<Props> = ({ transactions, categories }) => {
     return null;
   }
 
-  console.log(transactions);
-
   const groupedAmounts = transactions?.reduce(
     (grouped: { [key: string]: number }, transaction: ITransaction) => {
       const { categoryId, amount } = transaction;
