@@ -1,9 +1,9 @@
-import AddTransaction from '@/features/transactions/components/AddTransaction';
+import ManageTransactions from '@/features/transactions/components/ManageTransactions';
 
 const Transactions = () => {
   return (
     <>
-      <AddTransaction></AddTransaction>
+      <ManageTransactions></ManageTransactions>
     </>
   );
 };

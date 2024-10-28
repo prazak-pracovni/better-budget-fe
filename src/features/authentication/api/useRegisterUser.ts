@@ -34,7 +34,7 @@ export const useRegisterUser = () => {
     },
     onSuccess: ({ accessToken }) => {
       setAccessToken(accessToken);
-      navigate('/dashboard', { replace: true });
+      navigate('/transactions', { replace: true });
     },
   });
 

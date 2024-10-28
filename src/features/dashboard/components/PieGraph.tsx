@@ -5,18 +5,15 @@ import { ITransaction } from '@/features/transactions/interfaces/transaction.int
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 import PieGraphTooltip from './PieGraphTooltip';
 import DotBadge from '@/components/ui/DotBadge';
+import { DEFAULT_COLOR } from '@/constants/color';
 
 interface Props {
-  transactions?: ITransaction[];
+  transactions: ITransaction[];
   categories?: ICategory[];
 }
 
 const PieGraph: React.FC<Props> = ({ transactions, categories }) => {
-  if (transactions === undefined) {
-    return null;
-  }
-
-  const groupedAmounts = transactions?.reduce(
+  const groupedAmounts = transactions.reduce(
     (grouped: { [key: string]: number }, transaction: ITransaction) => {
       const { categoryId, amount } = transaction;
 
@@ -33,7 +30,7 @@ const PieGraph: React.FC<Props> = ({ transactions, categories }) => {
 
   const chartData = Object.entries(groupedAmounts).map(([key, value]) => {
     const category = categories?.find((category) => category.id === key);
-    return { name: category?.title || '', amount: value };
+    return { name: category?.title || '', amount: value, color: category?.color || DEFAULT_COLOR };
   });
 
   return (
@@ -54,7 +51,7 @@ const PieGraph: React.FC<Props> = ({ transactions, categories }) => {
             dataKey="amount"
           >
             {chartData.map((entry) => (
-              <Cell key={`cell-${entry.name}`} fill="#1d4ed8" />
+              <Cell key={`cell-${entry.name}`} fill={entry.color} />
             ))}
           </Pie>
           <Tooltip content={<PieGraphTooltip />} />
@@ -66,7 +63,7 @@ const PieGraph: React.FC<Props> = ({ transactions, categories }) => {
             <li key={entry.name}>
               <div className="flex justify-between">
                 <div className="flex items-center gap-x-3">
-                  <DotBadge color="#1d4ed8" />
+                  <DotBadge color={entry.color} />
                   <span className="text-sm text-gray-700">{entry.name}</span>
                 </div>
                 <span className="text-sm text-gray-700">{`${entry.amount} CZK`}</span>

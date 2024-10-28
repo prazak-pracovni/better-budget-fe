@@ -5,7 +5,7 @@ import TransactionTable from '@transactions/components/TransactionTable';
 import { ITransaction } from '@transactions/interfaces/transaction.interface';
 import TransactionModal from '@transactions/components/TransactionModal';
 
-const AddTransaction = () => {
+const ManageTransactions = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [transactionToEdit, setTransactionToEdit] = useState<ITransaction | undefined>(undefined);
   const { data: categories } = useGetCategories();
@@ -40,4 +40,4 @@ const AddTransaction = () => {
   );
 };
 
-export default AddTransaction;
+export default ManageTransactions;

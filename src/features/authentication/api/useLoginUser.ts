@@ -21,7 +21,7 @@ export const useLoginUser = () => {
     mutationFn: (userLogin: IUserLogin) => loginUser(userLogin),
     onSuccess: ({ accessToken }) => {
       setAccessToken(accessToken);
-      navigate('/dashboard', { replace: true });
+      navigate('/transactions', { replace: true });
     },
   });
 

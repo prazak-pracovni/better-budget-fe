@@ -7,13 +7,13 @@ import CardHeader from '@/components/ui/card/CardHeader';
 import { ITransaction } from '@/features/transactions/interfaces/transaction.interface';
 
 interface Props {
-  transactions: ITransaction[] | undefined;
+  transactions: ITransaction[];
 }
 
 const LineGraph: React.FC<Props> = ({ transactions }) => {
   let cumulativeSum = 0;
 
-  const transactionData = transactions?.map((transaction) => {
+  const transactionData = transactions.map((transaction) => {
     cumulativeSum += transaction.type === ETransactionType.EXPENSE ? -transaction.amount : transaction.amount;
 
     return {

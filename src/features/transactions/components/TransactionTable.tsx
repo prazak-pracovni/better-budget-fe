@@ -8,6 +8,7 @@ import FlexTableHeaderCell from '@/components/ui/table/header/FlexTableHeaderCel
 import FlexTableBody from '@/components/ui/table/body/FlexTableBody';
 import FlexTable from '@/components/ui/table/FlexTable';
 import FlexTableHeaderRow from '@/components/ui/table/header/FlexTablHeaderRow';
+import NoData from '@/components/ui/NoData';
 
 interface Props {
   categories: ICategory[] | undefined;
@@ -31,14 +32,22 @@ const TransactionTable: React.FC<Props> = ({ categories, openModal }) => {
         ))}
       </FlexTableHeaderRow>
       <FlexTableBody>
-        {transactions?.map((transaction) => (
-          <TransactionTableRow
-            key={transaction.id}
-            transaction={transaction}
-            categories={categories}
-            openModal={openModal}
-          ></TransactionTableRow>
-        ))}
+        {transactions?.length ? (
+          transactions.map((transaction) => (
+            <TransactionTableRow
+              key={transaction.id}
+              transaction={transaction}
+              categories={categories}
+              openModal={openModal}
+            ></TransactionTableRow>
+          ))
+        ) : (
+          <NoData>
+            <p className="text-center text-gray-700">
+              There are no transactions yet. You can create new transaction by clicking on Add transaction button.
+            </p>
+          </NoData>
+        )}
       </FlexTableBody>
     </FlexTable>
   );

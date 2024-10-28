@@ -2,6 +2,7 @@ import useClickOutside from '@/hooks/useClickOutside';
 import { IActionButton } from '@/interfaces/action-button.interface';
 import { IOption } from '@/interfaces/option.interface';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
+import { XCircleIcon } from '@heroicons/react/24/outline';
 import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { FieldError } from 'react-hook-form';
@@ -40,12 +41,9 @@ const Select: React.FC<Props> = ({
   const [dropdownStyle, setDropdownStyle] = useState({});
 
   useEffect(() => {
-    console.log('SelectedId', selectedId);
-
     if (selectedId) {
       const newSelectedItem = options.find((option) => option.id === selectedId);
       if (newSelectedItem) {
-        console.log('Set selected item', newSelectedItem);
         setSelectedItem(newSelectedItem);
       }
     } else {
@@ -105,22 +103,33 @@ const Select: React.FC<Props> = ({
             <div className="fixed inset-0 z-30">
               <div
                 ref={dropdownRef}
-                className={`absolute z-30 mt-2 w-56 max-h-96 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg ${fullWidth && 'w-full'}`}
+                className={`absolute z-30 overflow-hidden flex flex-col mt-2 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg ${fullWidth && 'w-full'}`}
                 style={dropdownStyle}
                 role="menu"
               >
-                <ul className="p-2">
-                  {options.map((option) => (
-                    <li
-                      key={option.id}
-                      onClick={() => handleChange(option)}
-                      className={
-                        'block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700 cursor-pointer'
-                      }
-                    >
-                      <span>{option.label}</span>
-                    </li>
-                  ))}
+                <ul
+                  className={`flex flex-col flex-grow overflow-auto max-h-56 p-2 ${!options.length && ' min-h-20 justify-center items-center'}`}
+                >
+                  {options.length ? (
+                    options.map((option) => (
+                      <li
+                        key={option.id}
+                        onClick={() => handleChange(option)}
+                        className={
+                          'block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700 cursor-pointer'
+                        }
+                      >
+                        <span>{option.label}</span>
+                      </li>
+                    ))
+                  ) : (
+                    <div className="flex items-center justify-center">
+                      <XCircleIcon className="w-5 h-5"></XCircleIcon>
+                      <span className="block w-full px-2 py-2 text-sm text-left text-gray-700">
+                        No options available
+                      </span>
+                    </div>
+                  )}
                 </ul>
                 {actionButton && (
                   <div className="p-2">
