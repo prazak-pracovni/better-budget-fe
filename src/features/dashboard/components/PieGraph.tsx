@@ -6,6 +6,7 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 import PieGraphTooltip from './PieGraphTooltip';
 import DotBadge from '@/components/ui/DotBadge';
 import { DEFAULT_COLOR } from '@/constants/color';
+import { ETransactionType } from '@/features/transactions/enums/transaction-type.enum';
 
 interface Props {
   transactions: ITransaction[];
@@ -13,20 +14,22 @@ interface Props {
 }
 
 const PieGraph: React.FC<Props> = ({ transactions, categories }) => {
-  const groupedAmounts = transactions.reduce(
-    (grouped: { [key: string]: number }, transaction: ITransaction) => {
-      const { categoryId, amount } = transaction;
+  const groupedAmounts = transactions
+    .filter((transaction) => transaction.type === ETransactionType.EXPENSE)
+    .reduce(
+      (grouped: { [key: string]: number }, transaction: ITransaction) => {
+        const { categoryId, amount } = transaction;
 
-      if (!grouped[categoryId]) {
-        grouped[categoryId] = 0;
-      }
+        if (!grouped[categoryId]) {
+          grouped[categoryId] = 0;
+        }
 
-      grouped[categoryId] += amount;
+        grouped[categoryId] += amount;
 
-      return grouped;
-    },
-    {} as { [key: string]: number },
-  );
+        return grouped;
+      },
+      {} as { [key: string]: number },
+    );
 
   const chartData = Object.entries(groupedAmounts).map(([key, value]) => {
     const category = categories?.find((category) => category.id === key);

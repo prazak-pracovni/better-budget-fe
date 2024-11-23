@@ -14,7 +14,7 @@ import dayjs from 'dayjs';
 
 interface Props {
   transaction: ITransaction;
-  categories?: ICategory[];
+  categories: ICategory[];
   openModal: (transaction: ITransaction) => void;
 }
 
@@ -32,7 +32,7 @@ const TransactionTableRow: React.FC<Props> = ({ transaction, categories, openMod
   const transactionContent = useMemo(() => {
     return {
       title: transaction.title,
-      category: categories?.find((category) => category.id === transaction.categoryId)?.title || 'Unknown Category',
+      category: categories.find((category) => category.id === transaction.categoryId)?.title || 'Unknown Category',
       date: dayjs(transaction.date).format('DD/MM/YYYY'),
       amount: transaction.type === ETransactionType.EXPENSE ? `-${transaction.amount}` : `${transaction.amount}`,
     };

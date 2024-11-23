@@ -1,1 +1,1 @@
-export type TOrder = 'asc' | 'desc';
+export type TOrder = 'ASC' | 'DESC';

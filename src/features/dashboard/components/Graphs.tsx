@@ -1,12 +1,14 @@
-import { useGetTransactions } from '@/features/transactions/api/useGetTransactions';
+import { useGetTransactionsData } from '@/features/transactions/api/useGetTransactionsData';
 import LineGraph from './LineGraph';
 import PieGraph from './PieGraph';
 import { useGetCategories } from '@/features/categories/api/useGetCategories';
 import NoData from '@/components/ui/NoData';
 
 const Graphs = () => {
-  const { data: transactions } = useGetTransactions('asc');
+  const { data: transactionsData } = useGetTransactionsData('ASC');
   const { data: categories } = useGetCategories();
+
+  const transactions = transactionsData?.transactions;
 
   return (
     <div className="flex gap-x-8">

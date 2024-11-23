@@ -10,7 +10,7 @@ interface Props {
 }
 
 const Button: React.FC<Props> = ({ variant, type, children, fullWidth, onClick }) => {
-  const baseClass = `inline-block h-full w-full rounded-md border px-6 py-2 text-sm font-medium transition focus:outline-none focus:ring ${fullWidth && 'w-full'}`;
+  const baseClass = `inline-block h-full rounded-md border px-6 py-2 text-sm font-medium transition focus:outline-none focus:ring ${fullWidth && 'w-full'}`;
 
   const btnClass = `${baseClass}
     ${variant === 'primary' && 'border-blue-600 bg-blue-600 text-white hover:bg-transparent hover:text-blue-600 active:text-blue-500'}

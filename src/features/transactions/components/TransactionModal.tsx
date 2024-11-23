@@ -4,7 +4,7 @@ import { XMarkIcon } from '@heroicons/react/16/solid';
 import { ITransaction } from '@transactions/interfaces/transaction.interface';
 import TransactionForm from '@transactions/components/TransactionForm';
 interface Props {
-  categories: ICategory[] | undefined;
+  categories?: ICategory[];
   isOpened: boolean;
   transactionToEdit?: ITransaction;
   closeModal: () => void;
