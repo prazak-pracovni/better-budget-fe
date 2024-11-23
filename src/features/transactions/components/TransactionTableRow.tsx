@@ -11,6 +11,7 @@ import DropdownMenu from '@/components/ui/dropdown/DropdownMenu';
 import DropdownItem from '@/components/ui/dropdown/DropdownItem';
 import { useMemo } from 'react';
 import dayjs from 'dayjs';
+import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 interface Props {
   transaction: ITransaction;
@@ -57,8 +58,14 @@ const TransactionTableRow: React.FC<Props> = ({ transaction, categories, openMod
             <EllipsisVerticalIcon className="w-4 h-4"></EllipsisVerticalIcon>
           </DropdownButton>
           <DropdownMenu width="140">
-            <DropdownItem onClick={handleTransactionEdit}>Edit</DropdownItem>
-            <DropdownItem onClick={handleTransactionRemove}>Remove</DropdownItem>
+            <DropdownItem onClick={handleTransactionEdit}>
+              <PencilIcon className="w-4 h-4" />
+              Edit
+            </DropdownItem>
+            <DropdownItem onClick={handleTransactionRemove}>
+              <TrashIcon className="w-4 h-4"></TrashIcon>
+              Remove
+            </DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </FlexTableCell>

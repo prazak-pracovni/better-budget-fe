@@ -15,7 +15,7 @@ const DropdownItem: React.FC<Props> = ({ children, onClick }) => {
   };
 
   return (
-    <button onClick={handleClick} className="block w-full p-2 text-sm text-left text-gray-700 hover:bg-gray-100">
+    <button onClick={handleClick} className="w-full flex items-center gap-x-1 p-2 text-sm text-left text-gray-700 hover:bg-gray-100">
       {children}
     </button>
   );
