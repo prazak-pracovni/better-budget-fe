@@ -34,7 +34,7 @@ const PieGraph: React.FC<Props> = ({ transactions, categories }) => {
   const chartData = Object.entries(groupedAmounts).map(([key, value]) => {
     const category = categories?.find((category) => category.id === key);
     return { name: category?.title || '', amount: value, color: category?.color || DEFAULT_COLOR };
-  });
+  }).sort((a, b) => b.amount - a.amount);
 
   return (
     <Card>

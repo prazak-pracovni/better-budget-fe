@@ -39,10 +39,10 @@ const AddCategoryForm: React.FC<Props> = ({ closeModal }) => {
           ></Input>
         </div>
         <div className="w-full flex flex-col items-center gap-2">
-          <Button variant="primary" type="submit">
+          <Button variant="primary" fullWidth={true} type="submit">
             Add category
           </Button>
-          <Button variant="tertiary" type="button" onClick={closeModal}>
+          <Button variant="tertiary" fullWidth={true} type="button" onClick={closeModal}>
             Cancel
           </Button>
         </div>
