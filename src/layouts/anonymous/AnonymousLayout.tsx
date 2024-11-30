@@ -4,9 +4,11 @@ import Header from './AnonymousHeader';
 const AnonymousLayout = () => {
   return (
     <>
-      <Header />
-      <div className="max-w-screen-xl mx-auto">
-        <Outlet />
+      <div className="h-screen flex flex-col overflow-auto">
+        <Header />
+        <main className="flex-grow w-full max-w-screen-xl mx-auto">
+          <Outlet />
+        </main>
       </div>
     </>
   );
