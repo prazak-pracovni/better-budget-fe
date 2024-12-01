@@ -49,6 +49,7 @@ const Homepage = () => {
               Overall
               <ul className="list-disc list-inside text-base leading-7">
                 <li>Improve documentation</li>
+                <li>Add shadow loading</li>
                 <li>Add test for crucial functionality (try Jest for fun)</li>
               </ul>
             </li>

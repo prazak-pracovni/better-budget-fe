@@ -15,14 +15,8 @@ const AnonymousHeader = () => {
             <nav aria-label="Global" className="hidden md:block">
               <ul className="flex items-center gap-6 text-sm">
                 <li>
-                  <Link className="text-gray-500 transition hover:text-gray-500/75" to={'/about'}>
-                    About
-                  </Link>
-                </li>
-
-                <li>
-                  <Link className="text-gray-500 transition hover:text-gray-500/75" to={'/contact'}>
-                    Contact
+                  <Link className="text-gray-500 transition hover:text-gray-500/75" to={'/'}>
+                    Home
                   </Link>
                 </li>
               </ul>
