@@ -1,3 +1,4 @@
+import NoData from '@/components/ui/NoData';
 import { useGetCategories } from '@/features/categories/api/useGetCategories';
 import Graphs from '@/features/dashboard/components/Graphs';
 import RangeSelect from '@/features/dashboard/components/PeriodSelect';
@@ -38,14 +39,27 @@ const Dashboard = () => {
   }
 
   return (
-    <>
-      <div className="flex flex-col pt-8">
-        <div className="ml-auto mb-6">
-          <RangeSelect handleRangeSelect={handleSelectedRange} selectedRange={selectedRange} />
-        </div>
-        <Graphs transactions={transactions} transactionFilter={transactionFilter} balance={balance} categories={categories} />
-      </div>
-    </>
+    <div className="flex flex-col pt-8">
+      {transactions.length ? (
+        <>
+          <div className="ml-auto mb-6">
+            <RangeSelect handleRangeSelect={handleSelectedRange} selectedRange={selectedRange} />
+          </div>
+          <Graphs
+            transactions={transactions}
+            transactionFilter={transactionFilter}
+            balance={balance}
+            categories={categories}
+          />
+        </>
+      ) : (
+        <NoData>
+          <p className="text-center text-gray-700">
+            There are no transactions yet. You can create new transactions on transaction page.
+          </p>
+        </NoData>
+      )}
+    </div>
   );
 };
 
