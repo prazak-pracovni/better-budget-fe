@@ -14,7 +14,7 @@ interface Props {
 
 const TransactionsHistory: React.FC<Props> = ({ categories, openModal }) => {
   const [transactionFilter, setTransactionFilter] = useState<ITransactionsFilter>({ page: 1, limit: 10 });
-
+  
   const { data: transactionsData } = useGetTransactionsData('DESC', transactionFilter);
 
   const onPageChange = (page: number) => {

@@ -1,20 +1,23 @@
-import { useGetTransactionsData } from '@/features/transactions/api/useGetTransactionsData';
 import LineGraph from './LineGraph';
 import PieGraph from './PieGraph';
-import { useGetCategories } from '@/features/categories/api/useGetCategories';
 import NoData from '@/components/ui/NoData';
+import { ITransactionsFilter } from '@transactions/interfaces/transactions-filter.interface';
+import { ICategory } from '@categories/interfaces/category.interface';
+import { ITransaction } from '@transactions/interfaces/transaction.interface';
 
-const Graphs = () => {
-  const { data: transactionsData } = useGetTransactionsData('ASC');
-  const { data: categories } = useGetCategories();
+interface Props {
+  transactions: ITransaction[];
+  transactionFilter: ITransactionsFilter;
+  balance: number;
+  categories: ICategory[];
+}
 
-  const transactions = transactionsData?.transactions;
-
+const Graphs: React.FC<Props> = ({ transactions, transactionFilter, balance, categories }) => {
   return (
     <div className="flex gap-x-8">
       {transactions?.length ? (
         <>
-          <LineGraph transactions={transactions} />
+          <LineGraph transactions={transactions} transactionFilter={transactionFilter} balance={balance} />
           <PieGraph transactions={transactions} categories={categories} />
         </>
       ) : (

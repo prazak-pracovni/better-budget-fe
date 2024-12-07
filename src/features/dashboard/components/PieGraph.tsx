@@ -39,7 +39,7 @@ const PieGraph: React.FC<Props> = ({ transactions, categories }) => {
   return (
     <Card>
       <CardHeader>
-        <h2 className="mb-1 text-sm text-gray-700 font-semibold uppercase">Expenses by category</h2>
+        <h2 className="mb-1 text-sm text-gray-700 font-semibold uppercase">Expenses by categories</h2>
       </CardHeader>
       <ResponsiveContainer height={360}>
         <PieChart height={300} width={500}>

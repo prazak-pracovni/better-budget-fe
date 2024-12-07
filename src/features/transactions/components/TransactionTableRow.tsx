@@ -54,10 +54,10 @@ const TransactionTableRow: React.FC<Props> = ({ transaction, categories, openMod
       <FlexTableCell className="justify-end">
         <Dropdown>
           <DropdownButton>
-            <span className="sr-only">Category options</span>
+            <span className="sr-only">Transaction options</span>
             <EllipsisVerticalIcon className="w-4 h-4"></EllipsisVerticalIcon>
           </DropdownButton>
-          <DropdownMenu width="140">
+          <DropdownMenu width="140px">
             <DropdownItem onClick={handleTransactionEdit}>
               <PencilIcon className="w-4 h-4" />
               Edit

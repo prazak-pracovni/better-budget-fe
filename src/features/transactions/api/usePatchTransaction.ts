@@ -4,7 +4,7 @@ import { ITransaction } from '@transactions/interfaces/transaction.interface';
 import { AxiosInstance } from 'axios';
 
 const patchTransaction = async (transaction: ITransaction, axiosProtected: AxiosInstance) => {
-  const { data } = await axiosProtected.post(`/api/transaction-records`, transaction);
+  const { data } = await axiosProtected.patch(`/api/transaction-records/${transaction.id}`, transaction);
   return data;
 };
 

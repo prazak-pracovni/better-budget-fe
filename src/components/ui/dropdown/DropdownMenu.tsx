@@ -18,7 +18,7 @@ const DropdownMenu: React.FC<Props> = ({ children, width }) => {
       const rect = dropdownRef.current.getBoundingClientRect();
 
       setDropdownStyle({
-        width: `${width || rect.width}px`,
+        width: `${width ? width : rect.width + 'px'}`,
         top: `${rect.bottom + window.scrollY - 8}px`,
         left: `${rect.left + window.scrollX}px`,
       });
