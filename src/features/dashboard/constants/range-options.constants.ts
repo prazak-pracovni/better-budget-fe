@@ -12,6 +12,11 @@ export const RANGE_OPTIONS: IRangeOption[] = [
     unit: 'month',
   },
   {
+    label: 'Last month',
+    value: -1,
+    unit: 'month',
+  },
+  {
     label: 'Last 3 months',
     value: -3,
     unit: 'month',

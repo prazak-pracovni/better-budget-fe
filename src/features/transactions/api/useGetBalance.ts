@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosInstance } from 'axios';
 import useAxiosProtected from '@/features/authentication/api/useAxiosProtected';
+import { IBalance } from '@/features/transactions/interfaces/balance.interface';
 
-const getBalance = async (axiosProtected: AxiosInstance, date?: string): Promise<number> => {
+const getBalance = async (axiosProtected: AxiosInstance, date?: string): Promise<IBalance> => {
   const { data } = await axiosProtected.get(`/api/transaction-records/balance`, { params: { date } });
   return data;
 };

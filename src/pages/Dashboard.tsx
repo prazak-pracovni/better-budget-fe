@@ -1,7 +1,7 @@
 import NoData from '@/components/ui/NoData';
 import { useGetCategories } from '@/features/categories/api/useGetCategories';
 import Graphs from '@/features/dashboard/components/Graphs';
-import RangeSelect from '@/features/dashboard/components/PeriodSelect';
+import RangeSelect from '@/features/dashboard/components/RangeSelect';
 import { RANGE_OPTIONS } from '@/features/dashboard/constants/range-options.constants';
 import { IRangeOption } from '@/features/dashboard/interfaces/range-option.interface';
 import { useGetBalance } from '@/features/transactions/api/useGetBalance';
@@ -23,15 +23,24 @@ const Dashboard = () => {
 
   const transactions = transactionsData?.transactions;
 
-  const handleSelectedRange = (range: IRangeOption) => {
+  console.log('Balance', balance);
+
+  const handleSelectedRange = (range: IRangeOption): void => {
     setSelectedRange(range);
-    setTransactionFilter({
-      startDate:
-        range.value > 0
-          ? dayjs().startOf(range.unit).toISOString()
-          : dayjs().startOf(range.unit).add(range.value, range.unit).toISOString(),
-      endDate: dayjs().endOf(range.unit).toISOString(),
-    });
+    setTransactionFilter(convertRangeToFilter(range));
+  };
+
+  const convertRangeToFilter = (range: IRangeOption): ITransactionsFilter => {
+    const startOfUnit = dayjs().startOf(range.unit);
+    const endOfUnit = dayjs().endOf(range.unit);
+
+    const startDate = range.value > 0 ? startOfUnit : startOfUnit.add(range.value, range.unit);
+    const endDate = range.value > 0 ? endOfUnit : startOfUnit.subtract(1, 'day');
+
+    return {
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
+    };
   };
 
   if (!transactions || !categories || balance === undefined) {
@@ -40,22 +49,20 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-col pt-8">
+      <div className="ml-auto mb-6">
+        <RangeSelect handleRangeSelect={handleSelectedRange} selectedRange={selectedRange} />
+      </div>
       {transactions.length ? (
-        <>
-          <div className="ml-auto mb-6">
-            <RangeSelect handleRangeSelect={handleSelectedRange} selectedRange={selectedRange} />
-          </div>
-          <Graphs
-            transactions={transactions}
-            transactionFilter={transactionFilter}
-            balance={balance}
-            categories={categories}
-          />
-        </>
+        <Graphs
+          transactions={transactions}
+          transactionFilter={transactionFilter}
+          balance={balance}
+          categories={categories}
+        />
       ) : (
         <NoData>
           <p className="text-center text-gray-700">
-            There are no transactions yet. You can create new transactions on transaction page.
+            There are no transactions. You can create new transactions on transaction page.
           </p>
         </NoData>
       )}

@@ -6,15 +6,16 @@ import Card from '@/components/ui/card/Card';
 import CardHeader from '@/components/ui/card/CardHeader';
 import { ITransaction } from '@transactions/interfaces/transaction.interface';
 import { ITransactionsFilter } from '@transactions/interfaces/transactions-filter.interface';
+import { IBalance } from '@/features/transactions/interfaces/balance.interface';
 
 interface Props {
   transactions: ITransaction[];
   transactionFilter: ITransactionsFilter;
-  balance: number;
+  balance: IBalance;
 }
 
 const LineGraph: React.FC<Props> = ({ transactions, transactionFilter, balance }) => {
-  let cumulativeSum = balance;
+  let cumulativeSum = balance.balanceOnDate;
 
   const transactionData = transactions.map((transaction) => {
     cumulativeSum += transaction.type === ETransactionType.EXPENSE ? -transaction.amount : transaction.amount;
@@ -26,9 +27,12 @@ const LineGraph: React.FC<Props> = ({ transactions, transactionFilter, balance }
   });
 
   const graphData = [
-    { amount: balance, date: dayjs(transactionFilter.startDate).valueOf() },
+    { amount: balance.balanceOnDate, date: dayjs(transactionFilter.startDate).valueOf() },
     ...transactionData,
-    { date: dayjs(transactionFilter.endDate).valueOf(), amount: transactionData[transactionData.length - 1].amount },
+    {
+      date: dayjs(transactionFilter.endDate).valueOf(),
+      amount: transactionData[transactionData.length - 1]?.amount || balance,
+    },
   ];
 
   const domain = [dayjs(transactionFilter.startDate).valueOf(), dayjs(transactionFilter.endDate).valueOf()];
@@ -36,10 +40,10 @@ const LineGraph: React.FC<Props> = ({ transactions, transactionFilter, balance }
   return (
     <Card>
       <CardHeader>
-        <h2 className="mb-1 text-sm text-gray-700 font-semibold uppercase">Accounts overview</h2>
+        <h2 className="mb-1 text-sm text-gray-700 font-semibold uppercase">Account overview</h2>
         <span className="mb-2 text-sm text-gray-600">Net worth</span>
-        <span className={`font-semibold ${cumulativeSum > 0 ? 'text-green-500' : 'text-red-500'}`}>
-          {`${cumulativeSum > 0 ? '+ ' : ''}${cumulativeSum} CZK`}
+        <span className={`font-semibold ${balance.totalBalance > 0 ? 'text-green-500' : 'text-red-500'}`}>
+          {`${balance.totalBalance > 0 ? '+ ' : ''}${balance.totalBalance} CZK`}
         </span>
       </CardHeader>
       <ResponsiveContainer height={360} className="mb-6">
