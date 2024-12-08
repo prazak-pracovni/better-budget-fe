@@ -66,6 +66,7 @@ const TransactionForm: React.FC<Props> = ({ categories, transactionToEdit, close
             fullWidth={true}
             validation={{
               required: { value: true, message: 'Amount is required' },
+              min: { value: 0, message: 'Amount must be greater than 0' },
               valueAsNumber: true,
             }}
           ></Input>
