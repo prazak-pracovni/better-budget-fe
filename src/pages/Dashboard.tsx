@@ -23,8 +23,6 @@ const Dashboard = () => {
 
   const transactions = transactionsData?.transactions;
 
-  console.log('Balance', balance);
-
   const handleSelectedRange = (range: IRangeOption): void => {
     setSelectedRange(range);
     setTransactionFilter(convertRangeToFilter(range));
